@@ -81,3 +81,15 @@ class ImageEntite extends GameEntite{
 	
 	
 }
+
+
+class FireBall extends ImageEntite{
+
+	public FireBall(int x, int y, int r) {
+		super(x, y, r, "");
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	
+}

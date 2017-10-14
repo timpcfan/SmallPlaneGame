@@ -39,6 +39,8 @@ public class VisHelper {
     public static final Color Black = new Color(0x000000);
     public static final Color White = new Color(0xFFFFFF);
     
+    public static final Color Sky = new Color(0x3B2951);
+    
     // 绘制空心圆
     public static void strokeCircle(Graphics2D g, int x, int y, int r){
 

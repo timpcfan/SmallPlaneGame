@@ -50,6 +50,11 @@ public class GameFrame extends JFrame{
 	 */
 	private class GameCanvas extends JPanel{
 		
+
+		public GameCanvas() {
+			super(true);
+			setBackground(VisHelper.Sky);
+		}
 		
 		/**
 		 * paintComponent方法用于具体绘制
