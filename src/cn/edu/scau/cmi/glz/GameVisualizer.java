@@ -26,7 +26,7 @@ public class GameVisualizer {
 	public GameVisualizer(String title, int width, int height) {
 		// TODO 数据初始化
 		model = new GameModel();
-		model.setPlayer(new ImageEntite(300, 600, 30, "resources/plane.png"));
+		model.setPlayer(new PlayerPlane(300, 600, 30));
 		
 		
 		

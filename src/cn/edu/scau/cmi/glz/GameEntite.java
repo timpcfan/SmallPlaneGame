@@ -86,9 +86,45 @@ class ImageEntite extends GameEntite{
 
 class PlayerPlane extends ImageEntite{
 	
+	private int life;
+	private int bullet;
+	
 	public PlayerPlane(int x, int y, int r) {
 		super(x, y, r, "resources/plane.png");
 	}
+	
+	public void fire() {
+		bullet --;
+	}
+	
+	public boolean hasBullet() {
+		return bullet > 0;
+	}
+	
+	public void crash() {
+		life --;
+	}
+	
+	public boolean hasLife() {
+		return life > 0;
+	}
+
+	public int getLife() {
+		return life;
+	}
+
+	public void setLife(int life) {
+		this.life = life;
+	}
+
+	public int getBullet() {
+		return bullet;
+	}
+
+	public void setBullet(int bullet) {
+		this.bullet = bullet;
+	}
+	
 	
 }
 
