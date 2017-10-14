@@ -37,6 +37,17 @@ public class GameFrame extends JFrame{
 	
 	
 	
+	public int getCanvasWidth() {
+		return canvasWidth;
+	}
+
+
+	public int getCanvasHeight() {
+		return canvasHeight;
+	}
+
+
+
 	private GameModel model;
 	public void render(GameModel model) {
 		this.model = model;

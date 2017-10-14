@@ -52,6 +52,28 @@ public class GameVisualizer {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			
+			int d = 5;
+			
+			//按下a向左移动
+			if(e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
+				if(model.getPlayer().getX() != 0)
+					model.getPlayer().setX(model.getPlayer().getX() - d);
+			}
+			//按下d向右移动
+			if(e.getKeyChar() == 'd' || e.getKeyChar() == 'D') {
+				if(model.getPlayer().getX() != frame.getCanvasWidth())
+					model.getPlayer().setX(model.getPlayer().getX() + d);
+			}
+			//按下w向上移动
+			if(e.getKeyChar() == 's' || e.getKeyChar() == 'S') {
+				if(model.getPlayer().getY() != 0)
+					model.getPlayer().setY(model.getPlayer().getY() + d);
+			}
+			//按下s向下移动
+			if(e.getKeyChar() == 'w' || e.getKeyChar() == 'W') {
+				if(model.getPlayer().getY() != frame.getCanvasHeight())
+					model.getPlayer().setY(model.getPlayer().getY() - d);
+			}
 		}
 	}
 	
