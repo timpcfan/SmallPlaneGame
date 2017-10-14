@@ -15,11 +15,11 @@ import sun.reflect.generics.tree.VoidDescriptor;
  */
 public class GameEntite {
 
-	private int x, y; // 实体左上角坐标
-	private int r; // 实体的半径，用于碰撞检测
-	private int vx, vy; // 实体的运动速度
+	private double x, y; // 实体左上角坐标
+	private double r; // 实体的半径，用于碰撞检测
+	private double vx, vy; // 实体的运动速度（像素/秒）
 
-	public GameEntite(int x, int y, int r) {
+	public GameEntite(double x, double y, double r) {
 		this.x = x;
 		this.y = y;
 		this.r = r;
@@ -28,36 +28,41 @@ public class GameEntite {
 	}
 
 	public int getX() {
-		return x;
+		return (int)x;
 	}
 
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
 	public int getY() {
-		return y;
+		return (int)y;
 	}
 
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
 
-	public int getR() {
+	public double getR() {
 		return r;
 	}
 	
-	public void setSpeed(int vx, int vy) {
+	public void setSpeed(double vx, double vy) {
 		this.vx = vx;
 		this.vy = vy;
 	}
 
 	public Point getPoint() {
-		return new Point(x, y);
+		return new Point((int)x, (int)y);
 	}
 
 	public boolean collideWith(GameEntite other) {
 		return (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y) <= (r - other.r) * (r - other.r);
+	}
+	
+	public void move(double passedSeconds) {
+		x += vx * passedSeconds;
+		y += vy * passedSeconds;
 	}
 }
 
@@ -133,7 +138,7 @@ class Enemy extends ImageEntite{
 	private int life = 1;
 	
 	public Enemy(int x, int y, int r) {
-		super(x, y, r, "resource/enemy.png");
+		super(x, y, r, "resources/enemy1.png");
 	}
 	
 	public boolean isDead() {

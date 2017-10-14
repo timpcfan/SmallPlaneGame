@@ -2,6 +2,8 @@ package cn.edu.scau.cmi.glz;
 
 import java.util.ArrayList;
 
+import com.sun.xml.internal.fastinfoset.algorithm.IEEE754FloatingPointEncodingAlgorithm;
+
 /**
  * GameModel类用于储存游戏数据（Model）
  */
@@ -22,6 +24,11 @@ public class GameModel {
 	
 	public ArrayList<ImageEntite> getAllEntites() {
 		return entiteList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<ImageEntite> getAllEntitesCopy(){
+		return (ArrayList<ImageEntite>) entiteList.clone();
 	}
 	
 	public ArrayList<ImageEntite> getEnemies(){

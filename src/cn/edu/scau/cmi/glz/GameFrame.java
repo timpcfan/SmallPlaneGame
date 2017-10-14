@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.logging.Logger;
 
 import javax.swing.JFrame;
@@ -87,11 +89,12 @@ public class GameFrame extends JFrame{
             if(model != null) {
 	            VisHelper.putImage(g2d, model.getPlayer().getX(), model.getPlayer().getY(), model.getPlayer().getImage());
 	            
-	            for(ImageEntite entite: model.getAllEntites()) {
+	            for(ImageEntite entite: model.getAllEntitesCopy()) {
 	            	VisHelper.putImage(g2d, entite.getX(), entite.getY(), entite.getImage());
+	            	
 	            }
-	        }
-            
+	        
+            }
 		}
 		
 		@Override
