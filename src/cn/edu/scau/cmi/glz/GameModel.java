@@ -12,6 +12,7 @@ public class GameModel {
 	private ArrayList<ImageEntite> bulletList;
 	private ImageEntite player;
 	
+	
 	public GameModel() {
 		entiteList = new ArrayList<>();
 		enemyList = new ArrayList<>();

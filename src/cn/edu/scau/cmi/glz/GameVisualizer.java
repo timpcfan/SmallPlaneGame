@@ -21,14 +21,14 @@ public class GameVisualizer {
 	private GameFrame frame;
 	private GameModel model;
 	
+	private boolean[] keys = new boolean[5];
+	
 	public static final int PAUSE = 40; // 控制动画刷新间隔
 	
 	public GameVisualizer(String title, int width, int height) {
 		// TODO 数据初始化
 		model = new GameModel();
 		model.setPlayer(new ImageEntite(300, 600, 30, "resources/plane.png"));
-		
-		
 		
 		
 		EventQueue.invokeLater(()->{
@@ -52,30 +52,31 @@ public class GameVisualizer {
 		@Override
 		public void keyPressed(KeyEvent e) {
 			
-			int d = 5;
+			if(e.getKeyChar() == 'a' || e.getKeyChar() == 'A')
+				keys[0] = true;
+			if(e.getKeyChar() == 'd' || e.getKeyChar() == 'D')
+				keys[1] = true;
+			if(e.getKeyChar() == 'w' || e.getKeyChar() == 'W')
+				keys[2] = true;
+			if(e.getKeyChar() == 's' || e.getKeyChar() == 'S')
+				keys[3] = true;
+			if(e.getKeyChar() == ' ')
+				keys[4] = true;
+		}
+		
+		@Override
+		public void keyReleased(KeyEvent e) {
 			
-			//按下键向左移动
-			if(e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
-				if(model.getPlayer().getX() != 0)
-					model.getPlayer().setX(model.getPlayer().getX() - d);
-			}
-			//按下d键向右移动
-			if(e.getKeyChar() == 'd' || e.getKeyChar() == 'D') {
-				if(model.getPlayer().getX() != frame.getCanvasWidth())
-					model.getPlayer().setX(model.getPlayer().getX() + d);
-			}
-			//按下s键向上移动
-			if(e.getKeyChar() == 's' || e.getKeyChar() == 'S') {
-				if(model.getPlayer().getY() != 0)
-					model.getPlayer().setY(model.getPlayer().getY() + d);
-			}
-			//按下w键向下移动
-			if(e.getKeyChar() == 'w' || e.getKeyChar() == 'W') {
-				if(model.getPlayer().getY() != frame.getCanvasHeight())
-					model.getPlayer().setY(model.getPlayer().getY() - d);
-			}
-			
-			
+			if(e.getKeyChar() == 'a' || e.getKeyChar() == 'A')
+				keys[0] = false;
+			if(e.getKeyChar() == 'd' || e.getKeyChar() == 'D')
+				keys[1] = false;
+			if(e.getKeyChar() == 'w' || e.getKeyChar() == 'W')
+				keys[2] = false;
+			if(e.getKeyChar() == 's' || e.getKeyChar() == 'W')
+				keys[3] = false;
+			if(e.getKeyChar() == ' ')
+				keys[4] = false;
 		}
 	}
 	
@@ -104,11 +105,19 @@ public class GameVisualizer {
 			VisHelper.pause(PAUSE);
 			// 绘制数据
 			frame.render(model);
-
+			
 			
 			// 更新状态
+			int d = 5;//移动的距离
 			
-			
+			if(keys[0] && model.getPlayer().getX() >= 0)
+				model.getPlayer().setX(model.getPlayer().getX() - d);
+			if(keys[1] && model.getPlayer().getX() <= frame.getCanvasWidth())
+				model.getPlayer().setX(model.getPlayer().getX() + d);
+			if(keys[2] && model.getPlayer().getY() >= 0)
+				model.getPlayer().setY(model.getPlayer().getY() - d);
+			if(keys[3] && model.getPlayer().getY() <= frame.getCanvasHeight())
+				model.getPlayer().setY(model.getPlayer().getY() + d);
 		}		
 	}
 	
