@@ -129,11 +129,11 @@ class PlayerPlane extends ImageEntite{
 }
 
 
-class FireBall extends ImageEntite{
+class Bullet extends ImageEntite{
 
-	public FireBall(int x, int y, int r) {
-		super(x, y, r, "resources/fireball.png");
+	public Bullet(int x, int y, int r) {
+		super(x, y, r, "resources/bullet.png");
+		setSpeed(0, 20);
 	}
 	
-
 }
