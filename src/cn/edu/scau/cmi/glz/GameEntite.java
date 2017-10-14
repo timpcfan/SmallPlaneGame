@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 
 import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
 
+import sun.reflect.generics.tree.VoidDescriptor;
+
 
 /**
  * GameEntite是所有游戏实体的基类
@@ -82,14 +84,56 @@ class ImageEntite extends GameEntite{
 	
 }
 
+class PlayerPlane extends ImageEntite{
+	
+	private int life;
+	private int bullet;
+	
+	public PlayerPlane(int x, int y, int r) {
+		super(x, y, r, "resources/plane.png");
+	}
+	
+	public void fire() {
+		bullet --;
+	}
+	
+	public boolean hasBullet() {
+		return bullet > 0;
+	}
+	
+	public void crash() {
+		life --;
+	}
+	
+	public boolean hasLife() {
+		return life > 0;
+	}
 
-class FireBall extends ImageEntite{
+	public int getLife() {
+		return life;
+	}
 
-	public FireBall(int x, int y, int r,int vy) {
-		super(x, y, r, "");
-		super.setSpeed(0, vy);
+	public void setLife(int life) {
+		this.life = life;
+	}
+
+	public int getBullet() {
+		return bullet;
+	}
+
+	public void setBullet(int bullet) {
+		this.bullet = bullet;
 	}
 	
 	
+}
+
+
+class FireBall extends ImageEntite{
+
+	public FireBall(int x, int y, int r) {
+		super(x, y, r, "resources/fireball.png");
+	}
 	
+
 }
