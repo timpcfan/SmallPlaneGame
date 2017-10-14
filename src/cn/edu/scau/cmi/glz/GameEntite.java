@@ -15,7 +15,7 @@ import sun.reflect.generics.tree.VoidDescriptor;
  */
 public class GameEntite {
 
-	private int x, y; // 实体中心坐标
+	private int x, y; // 实体左上角坐标
 	private int r; // 实体的半径，用于碰撞检测
 	private int vx, vy; // 实体的运动速度
 
@@ -128,6 +128,18 @@ class PlayerPlane extends ImageEntite{
 	
 }
 
+class Enemy extends ImageEntite{
+	
+	private int life = 1;
+	
+	public Enemy(int x, int y, int r) {
+		super(x, y, r, "resource/enemy.png");
+	}
+	
+	public boolean isDead() {
+		return (life == 0);
+	}
+}
 
 class Bullet extends ImageEntite{
 
