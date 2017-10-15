@@ -28,7 +28,7 @@ public class GameVisualizer {
 	public GameVisualizer(String title, int width, int height) {
 		// TODO 数据初始化
 		model = new GameModel();
-		model.setPlayer(new PlayerPlane(300, 600, 30));
+		model.setPlayer(new PlayerPlane(300, 600));
 
 		EventQueue.invokeLater(() -> {
 			frame = new GameFrame(title, width, height);
@@ -148,7 +148,11 @@ public class GameVisualizer {
 				entity.move(passedSeconds);
 			}
 			
-			
+			for(ImageEntity enemy: model.getEnemiesCopy()) {
+				if(enemy.collideWith(model.getPlayer(), 0.7)) {
+					model.deleteEnemy(enemy);
+				}
+			}
 			
 
 		}

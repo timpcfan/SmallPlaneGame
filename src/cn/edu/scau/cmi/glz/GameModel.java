@@ -9,26 +9,26 @@ import com.sun.xml.internal.fastinfoset.algorithm.IEEE754FloatingPointEncodingAl
  */
 public class GameModel {
 	
-	private ArrayList<ImageEntity> entiteList;
+	private ArrayList<ImageEntity> entityList;
 	private ArrayList<ImageEntity> enemyList;
 	private ArrayList<ImageEntity> bulletList;
 	private PlayerPlane player;
 	
 	
 	public GameModel() {
-		entiteList = new ArrayList<>();
+		entityList = new ArrayList<>();
 		enemyList = new ArrayList<>();
 		bulletList = new ArrayList<>();
 		player = null;
 	}
 	
 	public ArrayList<ImageEntity> getAllEntites() {
-		return entiteList;
+		return entityList;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<ImageEntity> getAllEntitesCopy(){
-		return (ArrayList<ImageEntity>) entiteList.clone();
+		return (ArrayList<ImageEntity>) entityList.clone();
 	}
 	
 	public ArrayList<ImageEntity> getEnemies(){
@@ -58,13 +58,18 @@ public class GameModel {
 	}
 	
 	public void addEnemy(ImageEntity enemy) {
-		entiteList.add(enemy);
+		entityList.add(enemy);
 		enemyList.add(enemy);
 	}
 	
 	public void addBullet(ImageEntity bullet) {
-		entiteList.add(bullet);
+		entityList.add(bullet);
 		bulletList.add(bullet);
+	}
+	
+	public void deleteEnemy(ImageEntity enemy) {
+		enemyList.remove(enemy);
+		entityList.remove(enemy);
 	}
 
 }

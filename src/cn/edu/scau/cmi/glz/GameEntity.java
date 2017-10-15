@@ -12,24 +12,21 @@ import javax.swing.ImageIcon;
 public class GameEntity {
 
 	private double x, y; // 实体左上角坐标
-	private double r; // 实体的半径，用于碰撞检测
 	private double vx, vy; // 实体的运动速度（像素/秒）
 	private double w, h; // 实体的宽和高
 
-	public GameEntity(double x, double y, double r, double w, double h) {
+	public GameEntity(double x, double y, double w, double h) {
 		this.x = x;
 		this.y = y;
-		this.r = r;
 		this.w = w;
 		this.h = h;
 		this.vx = 0;
 		this.vy = 0;
 	}
 	
-	public GameEntity(double x, double y, double r) {
+	public GameEntity(double x, double y) {
 		this.x = x;
 		this.y = y;
-		this.r = r;
 		this.w = 0;
 		this.h = 0;
 		this.vx = 0;
@@ -53,10 +50,6 @@ public class GameEntity {
 		this.y = y;
 	}
 
-	public double getR() {
-		return r;
-	}
-	
 	public void setCenterX(double centerX) {
 		x = centerX - w / 2;
 	}
@@ -99,8 +92,12 @@ public class GameEntity {
 		return new Point((int)x, (int)y);
 	}
 
-	public boolean collideWith(GameEntity other) {
-		return (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y) <= (r - other.r) * (r - other.r);
+	public boolean collideWith(GameEntity other, double ratio) {
+		if(Math.abs(this.getX() - (1 - ratio) / 2 * this.w - other.getX() + 0.1 * other.w) < ratio * this.w
+				&& Math.abs(this.getY() - (1 - ratio) / 2 * this.h - other.getY() + 0.1 * other.h) < ratio * this.h)
+			return true;
+		else
+			return false;
 	}
 	
 	public void move(double passedSeconds) {
@@ -114,15 +111,15 @@ class ImageEntity extends GameEntity{
 
 	private Image image;
 	
-	public ImageEntity(double x, double y, double r, Image image) {
-		super(x, y, r);
+	public ImageEntity(double x, double y, Image image) {
+		super(x, y);
 		this.image = image;
 		this.setW(this.image.getWidth(null));
 		this.setH(this.image.getHeight(null));
 	}
 	
-	public ImageEntity(int x, int y, int r, String imageURL) {
-		super(x, y, r);
+	public ImageEntity(int x, int y, String imageURL) {
+		super(x, y);
 		ImageIcon icon = new ImageIcon(imageURL);
         this.image = icon.getImage();
 		this.setW(this.image.getWidth(null));
@@ -141,8 +138,8 @@ class PlayerPlane extends ImageEntity{
 	private int life;
 	private int bullet;
 	
-	public PlayerPlane(int x, int y, int r) {
-		super(x, y, r, "resources/plane.png");
+	public PlayerPlane(int x, int y) {
+		super(x, y, "resources/plane.png");
 	}
 	
 	public void fire() {
@@ -184,8 +181,8 @@ class Enemy extends ImageEntity{
 	
 	private int life = 1;
 	
-	public Enemy(int x, int y, int r) {
-		super(x, y, r, "resources/enemy1.png");
+	public Enemy(int x, int y) {
+		super(x, y, "resources/enemy1.png");
 	}
 	
 	public boolean isDead() {
@@ -195,8 +192,8 @@ class Enemy extends ImageEntity{
 
 class Bullet extends ImageEntity{
 
-	public Bullet(int x, int y, int r) {
-		super(x, y, r, "resources/bullet.png");
+	public Bullet(int x, int y) {
+		super(x, y, "resources/bullet.png");
 		setSpeed(0, 20);
 	}
 	
