@@ -22,8 +22,7 @@ public class GameVisualizer {
 	public static final int DEFAULT_FPS = 60; // 控制动画帧率
 
 	private boolean[] keys = new boolean[5];
-
-	public static final int PAUSE = 40; // 控制动画刷新间隔
+	private int enemySpawnInterval = 1000;
 
 	public GameVisualizer(String title, int width, int height) {
 		// TODO 数据初始化
@@ -40,11 +39,45 @@ public class GameVisualizer {
 				run();
 			}).start();
 
-			new EnemyThread(frame, model, 1000).start();
+			// 添加敌人线程
+			new Thread(() -> {
+				while (true) {
+
+					VisHelper.pause(enemySpawnInterval);
+
+					Enemy enemy = new Enemy();
+					Stone1 stone1 = new Stone1();
+					Stone2 stone2 = new Stone2();
+
+					int x = (int) (Math.random() * (frame.getCanvasWidth() - enemy.getW()));
+					int y = -(int) enemy.getH();
+					int vx = (int) (Math.random() * 50);
+					int vy = (int) (Math.random() * 400 + 200);
+
+					// enemy.setX(x);
+					// enemy.setY(y);
+					// stone1.setX(x);
+					// stone1.setY(y);
+					// stone2.setX(x);
+					// stone2.setY(y);
+					//
+					// stone1.setSpeed(vx, vy);
+
+					if (x < frame.getCanvasWidth() / 2) {
+						enemy.setSpeed(vx, vy);
+					} else {
+						enemy.setSpeed(-vx, vy);
+					}
+
+					model.addEnemy(enemy);
+					// model.addEnemy(stone2);
+				}
+
+			}).start();
 
 			new Thread(() -> {
 				while (true) {
-					
+
 					VisHelper.pause(10);
 					if (keys[4]) {
 						Bullet bullet = new Bullet();
@@ -52,7 +85,7 @@ public class GameVisualizer {
 						bullet.setY(model.getPlayer().getY() - bullet.getH());
 						bullet.setSpeed(0, -500);
 						model.addBullet(bullet);
-						
+
 						VisHelper.pause(model.getPlayer().getFireDelay());
 					}
 
@@ -167,13 +200,13 @@ public class GameVisualizer {
 					model.deleteEnemy(enemy);
 				}
 			}
-			
+
 			for (ImageEntity bullet : model.getBulletsCopy()) {
-				for(ImageEntity enemy: model.getEnemiesCopy()) {
-					if(bullet.collideWith(enemy, 1)){
-						
+				for (ImageEntity enemy : model.getEnemiesCopy()) {
+					if (bullet.collideWith(enemy, 1)) {
+
 						System.out.println("enemyW：" + enemy.getW() + " H:" + enemy.getH());
-						
+
 						model.deleteEnemy(enemy);
 						model.deleteBullet(bullet);
 						break;
