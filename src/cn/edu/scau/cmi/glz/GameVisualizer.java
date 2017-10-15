@@ -18,11 +18,13 @@ public class GameVisualizer {
 
 	private GameFrame frame;
 	private GameModel model;
+	
 
 	public static final int DEFAULT_FPS = 60; // 控制动画帧率
 
 	private boolean[] keys = new boolean[5];
 	private int enemySpawnInterval = 1000;
+	private boolean isRunning = true;
 
 	public GameVisualizer(String title, int width, int height) {
 		// TODO 数据初始化
@@ -42,53 +44,56 @@ public class GameVisualizer {
 			// 添加敌人线程
 			new Thread(() -> {
 				while (true) {
+					if (isRunning) {
+						VisHelper.pause(enemySpawnInterval);
 
-					VisHelper.pause(enemySpawnInterval);
+						Enemy enemy = new Enemy();
+						Stone1 stone1 = new Stone1();
+						Stone2 stone2 = new Stone2();
 
-					Enemy enemy = new Enemy();
-					Stone1 stone1 = new Stone1();
-					Stone2 stone2 = new Stone2();
+						int x = (int) (Math.random() * (frame.getCanvasWidth() - enemy.getW()));
+						int y = -(int) enemy.getH();
+						int vx = (int) (Math.random() * 50);
+						int vy = (int) (Math.random() * 400 + 200);
 
-					int x = (int) (Math.random() * (frame.getCanvasWidth() - enemy.getW()));
-					int y = -(int) enemy.getH();
-					int vx = (int) (Math.random() * 50);
-					int vy = (int) (Math.random() * 400 + 200);
+						// enemy.setX(x);
+						// enemy.setY(y);
+						// stone1.setX(x);
+						// stone1.setY(y);
+						// stone2.setX(x);
+						// stone2.setY(y);
+						//
+						// stone1.setSpeed(vx, vy);
 
-					// enemy.setX(x);
-					// enemy.setY(y);
-					// stone1.setX(x);
-					// stone1.setY(y);
-					// stone2.setX(x);
-					// stone2.setY(y);
-					//
-					// stone1.setSpeed(vx, vy);
+						if (x < frame.getCanvasWidth() / 2) {
+							enemy.setSpeed(vx, vy);
+						} else {
+							enemy.setSpeed(-vx, vy);
+						}
 
-					if (x < frame.getCanvasWidth() / 2) {
-						enemy.setSpeed(vx, vy);
-					} else {
-						enemy.setSpeed(-vx, vy);
+						model.addEnemy(enemy);
+						// model.addEnemy(stone2);
 					}
-
-					model.addEnemy(enemy);
-					// model.addEnemy(stone2);
 				}
 
 			}).start();
 
+			// 添加子弹
 			new Thread(() -> {
 				while (true) {
+					if (isRunning) {
+						VisHelper.pause(10);
+						if (keys[4]) {
+							Bullet bullet = new Bullet();
+							bullet.setCenterX(model.getPlayer().getCenterX());
+							bullet.setY(model.getPlayer().getY() - bullet.getH());
+							bullet.setSpeed(0, -500);
+							model.addBullet(bullet);
 
-					VisHelper.pause(10);
-					if (keys[4]) {
-						Bullet bullet = new Bullet();
-						bullet.setCenterX(model.getPlayer().getCenterX());
-						bullet.setY(model.getPlayer().getY() - bullet.getH());
-						bullet.setSpeed(0, -500);
-						model.addBullet(bullet);
+							VisHelper.pause(model.getPlayer().getFireDelay());
+						}
 
-						VisHelper.pause(model.getPlayer().getFireDelay());
 					}
-
 				}
 			}).start();
 
