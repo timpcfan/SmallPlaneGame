@@ -148,6 +148,8 @@ public class GameVisualizer {
 				entity.move(passedSeconds);
 			}
 			
+			
+			
 
 		}
 

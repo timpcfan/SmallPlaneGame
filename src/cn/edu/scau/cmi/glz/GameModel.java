@@ -35,8 +35,18 @@ public class GameModel {
 		return enemyList;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public ArrayList<ImageEntity> getEnemiesCopy(){
+		return (ArrayList<ImageEntity>) enemyList.clone();
+	}
+	
 	public ArrayList<ImageEntity> getBullets(){
 		return bulletList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<ImageEntity> getBulletsCopy(){
+		return (ArrayList<ImageEntity>) bulletList.clone();
 	}
 	
 	public void setPlayer(PlayerPlane player) {
