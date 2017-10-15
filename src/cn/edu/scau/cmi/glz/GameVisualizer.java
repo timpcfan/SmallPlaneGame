@@ -136,11 +136,11 @@ public class GameVisualizer {
 			int d = 5;
 			if (keys[0] && model.getPlayer().getX() >= 0)
 				model.getPlayer().setX(model.getPlayer().getX() - d);
-			if (keys[1] && model.getPlayer().getX() <= frame.getCanvasWidth())
+			if (keys[1] && (model.getPlayer().getX() + model.getPlayer().getW()) <= frame.getCanvasWidth())
 				model.getPlayer().setX(model.getPlayer().getX() + d);
 			if (keys[2] && model.getPlayer().getY() >= 0)
 				model.getPlayer().setY(model.getPlayer().getY() - d);
-			if (keys[3] && model.getPlayer().getY() <= frame.getCanvasHeight())
+			if (keys[3] && (model.getPlayer().getY() + model.getPlayer().getH() <= frame.getCanvasHeight()))
 				model.getPlayer().setY(model.getPlayer().getY() + d);
 			
 			// entities move
