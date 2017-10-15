@@ -53,9 +53,9 @@ public class GameVisualizer {
 					int y = -(int) enemy.getH();
 					int vx = (int) (Math.random() * 50);
 					int vy = (int) (Math.random() * 400 + 200);
-
-					// enemy.setX(x);
-					// enemy.setY(y);
+					
+					enemy.setX(x);
+					enemy.setY(y);
 					// stone1.setX(x);
 					// stone1.setY(y);
 					// stone2.setX(x);
@@ -205,7 +205,7 @@ public class GameVisualizer {
 				for (ImageEntity enemy : model.getEnemiesCopy()) {
 					if (bullet.collideWith(enemy, 1)) {
 
-						System.out.println("enemyW：" + enemy.getW() + " H:" + enemy.getH());
+//						System.out.println("enemyW：" + enemy.getW() + " H:" + enemy.getH());
 
 						model.deleteEnemy(enemy);
 						model.deleteBullet(bullet);
