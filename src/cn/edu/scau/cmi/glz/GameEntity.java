@@ -181,6 +181,10 @@ class Enemy extends ImageEntity{
 	
 	private int life = 1;
 	
+	public Enemy() {
+		super(0, 0, "resources/stone1.png");
+	}
+	
 	public Enemy(int x, int y) {
 		super(x, y, "resources/stone1.png");
 	}

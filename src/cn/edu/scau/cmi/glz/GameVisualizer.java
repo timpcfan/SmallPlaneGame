@@ -46,13 +46,15 @@ public class GameVisualizer {
 					
 					VisHelper.pause(enemySpawnInterval);
 					
-					int x = (int)(Math.random() * frame.getCanvasWidth());
-					int y = -113;
+					Enemy enemy = new Enemy();
+					
+					int x = (int)(Math.random() * (frame.getCanvasWidth() - enemy.getW()));
+					int y = -(int) enemy.getH();
 					int vx = (int)(Math.random() * 50);
-					int vy = (int)(Math.random() * 100);
+					int vy = (int)(Math.random() * 400 + 200);
 					
-					
-					Enemy enemy = new Enemy(x, y);
+					enemy.setX(x);
+					enemy.setY(y);
 					if(x < frame.getCanvasWidth() / 2) {
 						enemy.setSpeed(vx, vy);
 					}
