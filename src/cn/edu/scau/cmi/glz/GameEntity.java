@@ -251,3 +251,38 @@ class Bullet extends ImageEntity{
 	}
 	
 }
+
+class TextEntity extends GameEntity{
+	
+	private String text;
+	
+
+	public TextEntity() {
+		super(0, 0);
+	}
+	
+	public TextEntity(int x, int y) {
+		super(x, y);
+	}
+	
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	public void setCenterX(double x) {
+		setX(x);
+	}
+	
+	public void setCenterY(double y) {
+		setY(y);
+	}
+	
+	public int getCenterY() {
+		return getY();
+	}
+
+}
