@@ -171,7 +171,7 @@ public class GameVisualizer {
 			}
 			
 			for(ImageEntity enemy: model.getEnemiesCopy()) {
-				if(enemy.collideWith(model.getPlayer(), 0.7)) {
+				if(enemy.collideWith(model.getPlayer(), 0.85)) {
 					model.deleteEnemy(enemy);
 				}
 			}
