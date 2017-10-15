@@ -93,11 +93,9 @@ public class GameEntity {
 	}
 
 	public boolean collideWith(GameEntity other, double ratio) {
-		if(Math.abs(this.getX() - (1 - ratio) / 2 * this.w - other.getX() + 0.1 * other.w) < ratio * this.w
-				&& Math.abs(this.getY() - (1 - ratio) / 2 * this.h - other.getY() + 0.1 * other.h) < ratio * this.h)
-			return true;
-		else
-			return false;
+		
+		return Math.abs(this.getCenterX() - other.getCenterX()) < (this.getW() / 2 + other.getW() / 2) * ratio 
+				&& Math.abs(this.getCenterY() - other.getCenterY()) < (this.getH() / 2 + other.getH() / 2) * ratio;
 	}
 	
 	public void move(double passedSeconds) {
