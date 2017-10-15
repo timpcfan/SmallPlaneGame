@@ -1,15 +1,10 @@
 package cn.edu.scau.cmi.glz;
 
 import java.awt.EventQueue;
-import java.awt.Frame;
-import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Time;
-
-import javax.swing.JFrame;
 
 /**
  * GameVisualizer类是控制器（Controller） 处理用户的输入，管理和连接模型和视图
@@ -18,7 +13,6 @@ public class GameVisualizer {
 
 	private GameFrame frame;
 	private GameModel model;
-	
 
 	public static final int DEFAULT_FPS = 60; // 控制动画帧率
 
@@ -27,7 +21,7 @@ public class GameVisualizer {
 	private boolean isRunning = true;
 
 	public GameVisualizer(String title, int width, int height) {
-		// TODO 数据初始化
+
 		model = new GameModel();
 		model.setPlayer(new PlayerPlane(300, 600, 300));
 
@@ -47,9 +41,7 @@ public class GameVisualizer {
 					if (isRunning) {
 						VisHelper.pause(enemySpawnInterval);
 
-						Enemy enemy = new Enemy();
-						Stone1 stone1 = new Stone1();
-						Stone2 stone2 = new Stone2();
+						Enemy enemy = new Stone1();
 
 						int x = (int) (Math.random() * (frame.getCanvasWidth() - enemy.getW()));
 						int y = -(int) enemy.getH();
@@ -58,28 +50,20 @@ public class GameVisualizer {
 
 						enemy.setX(x);
 						enemy.setY(y);
-						// stone1.setX(x);
-						// stone1.setY(y);
-						// stone2.setX(x);
-						// stone2.setY(y);
-						//
-						// stone1.setSpeed(vx, vy);
-
+	
 						if (x < frame.getCanvasWidth() / 2) {
 							enemy.setSpeed(vx, vy);
 						} else {
 							enemy.setSpeed(-vx, vy);
 						}
-
-
+						
 						model.addEnemy(enemy);
-						// model.addEnemy(stone2);
 					}
 				}
 
 			}).start();
 
-			// 添加子弹
+			// 添加子弹线程
 			new Thread(() -> {
 				while (true) {
 					if (isRunning) {
@@ -88,7 +72,7 @@ public class GameVisualizer {
 							Bullet bullet = new Bullet();
 							bullet.setCenterX(model.getPlayer().getCenterX());
 							bullet.setY(model.getPlayer().getY() - bullet.getH());
-							bullet.setSpeed(0, -500);
+							bullet.setBulletSpeed(500);
 							model.addBullet(bullet);
 
 							VisHelper.pause(model.getPlayer().getFireDelay());
@@ -147,7 +131,6 @@ public class GameVisualizer {
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
-			Point pos = e.getPoint();
 
 		}
 	}
@@ -197,22 +180,19 @@ public class GameVisualizer {
 				model.getPlayer().setY(model.getPlayer().getY() + d);
 
 			// entities move
-			for (GameEntity entity : model.getAllEntitesCopy()) {
+			for (GameEntity entity : model.getImageEntitesCopy()) {
 				entity.move(passedSeconds);
 			}
 
-			for (ImageEntity enemy : model.getEnemiesCopy()) {
+			for (Enemy enemy : model.getEnemiesCopy()) {
 				if (enemy.collideWith(model.getPlayer(), 0.85)) {
 					model.deleteEnemy(enemy);
 				}
 			}
 
-			for (ImageEntity bullet : model.getBulletsCopy()) {
-				for (ImageEntity enemy : model.getEnemiesCopy()) {
-					if (bullet.collideWith(enemy, 1)) {
-
-//						System.out.println("enemyW：" + enemy.getW() + " H:" + enemy.getH());
-
+			for (Bullet bullet : model.getBulletsCopy()) {
+				for (Enemy enemy : model.getEnemiesCopy()) {
+					if (bullet.collideWith(enemy, 0.85)) {
 						model.deleteEnemy(enemy);
 						model.deleteBullet(bullet);
 						break;
@@ -228,6 +208,8 @@ public class GameVisualizer {
 	 * 程序入口
 	 */
 	public static void main(String[] args) {
+		
+		@SuppressWarnings("unused")
 		GameVisualizer visualizer = new GameVisualizer("PlaneGame", 500, 800);
 	}
 

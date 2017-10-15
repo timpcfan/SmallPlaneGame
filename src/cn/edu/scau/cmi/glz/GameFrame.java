@@ -4,20 +4,16 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-import sun.rmi.runtime.Log;
-
 /**
  * GameFrame类负责视图管理（View）
  * 继承于JFrame，作为整个游戏窗口的框架
  */
+@SuppressWarnings("serial")
 public class GameFrame extends JFrame{
 
 	private int canvasWidth;
@@ -87,16 +83,22 @@ public class GameFrame extends JFrame{
             // 具体绘制
             // TODO 具体绘制内容
             if(model != null) {
+            	
+            	// 玩家实体的绘制
 	            VisHelper.putImage(g2d, model.getPlayer().getX(), model.getPlayer().getY(), model.getPlayer().getImage());
 	            
-	            for(ImageEntity entity: model.getAllEntitesCopy()) {
+	            // 图形实体的绘制
+	            for(ImageEntity entity: model.getImageEntitesCopy())
 	            	VisHelper.putImage(g2d, entity.getX(), entity.getY(), entity.getImage());
-	            }
+	           
+	            // 形状实体的绘制
+	            for(ShapeEntity shape: model.getShapesCopy())
+	            	VisHelper.drawShape(g2d, shape.getX(), shape.getY(), shape.getShape(), shape.isFilled());
 	            
-	            for(TextEntity entity: model.getTextsCopy()) {
+	            // 文字实体的绘制
+	            for(TextEntity entity: model.getTextsCopy())
 	            	VisHelper.drawText(g2d, entity.getText(), entity.getCenterX(), entity.getCenterY());
-	            }
-	        
+	            
             }
 		}
 		

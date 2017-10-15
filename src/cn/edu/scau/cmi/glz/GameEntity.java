@@ -2,6 +2,7 @@ package cn.edu.scau.cmi.glz;
 
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.Shape;
 
 import javax.swing.ImageIcon;
 
@@ -15,11 +16,11 @@ public class GameEntity {
 	private double vx, vy; // 实体的运动速度（像素/秒）
 	private double w, h; // 实体的宽和高
 
-	public GameEntity(double x, double y, double w, double h) {
-		this.x = x;
-		this.y = y;
-		this.w = w;
-		this.h = h;
+	public GameEntity() {
+		this.x = 0;
+		this.y = 0;
+		this.w = 0;
+		this.h = 0;
 		this.vx = 0;
 		this.vy = 0;
 	}
@@ -32,8 +33,16 @@ public class GameEntity {
 		this.vx = 0;
 		this.vy = 0;
 	}
-
-
+	
+	public GameEntity(double x, double y, double w, double h) {
+		this.x = x;
+		this.y = y;
+		this.w = w;
+		this.h = h;
+		this.vx = 0;
+		this.vy = 0;
+	}
+	
 	public int getX() {
 		return (int)x;
 	}
@@ -109,17 +118,29 @@ class ImageEntity extends GameEntity{
 
 	private Image image;
 	
-	public ImageEntity(double x, double y, Image image) {
-		super(x, y);
-		this.image = image;
-		this.setW(this.image.getWidth(null));
-		this.setH(this.image.getHeight(null));
+	public ImageEntity() {
+		super();
+		this.image = null;
 	}
 	
-	public ImageEntity(int x, int y, String imageURL) {
+	public ImageEntity(double x, double y) {
+		super(x, y);
+		this.image = null;
+	}
+	
+	public ImageEntity(double x, double y, Image image) {
+		super(x, y);
+		setImage(image);
+	}
+	
+	public ImageEntity(double x, double y, String imageURL) {
 		super(x, y);
 		ImageIcon icon = new ImageIcon(imageURL);
-        this.image = icon.getImage();
+        setImage(icon.getImage());
+	}
+	
+	public void setImage(Image image) {
+		this.image = image;
 		this.setW(this.image.getWidth(null));
 		this.setH(this.image.getHeight(null));
 	}
@@ -127,7 +148,6 @@ class ImageEntity extends GameEntity{
 	public Image getImage() {
 		return this.image;
 	}
-	
 	
 }
 
@@ -137,7 +157,7 @@ class PlayerPlane extends ImageEntity{
 	private int bullet;
 	private int fireDelay;
 	
-	public PlayerPlane(int x, int y, int fireDelay) {
+	public PlayerPlane(double x, double y, int fireDelay) {
 		super(x, y, "resources/plane.png");
 		this.fireDelay = fireDelay;
 	}
@@ -190,14 +210,14 @@ class Enemy extends ImageEntity{
 	private int life = 1;
 	
 	public Enemy() {
-		super(0, 0, "resources/stone1.png");
+		super();
 	}
 	
-	public Enemy(int x, int y, Image image) {
+	public Enemy(double x, double y, Image image) {
 		super(x, y, image);
 	}
 	
-	public Enemy(int x, int y, String imageURL) {
+	public Enemy(double x, double y, String imageURL) {
 		super(x, y, imageURL);
 	}
 	
@@ -240,27 +260,37 @@ class Bullet extends ImageEntity{
 
 	public Bullet() {
 		super(0, 0, "resources/bullet.png");
-		setSpeed(0, -200);
 	}
 	
-	public Bullet(int x, int y) {
+	public Bullet(double x, double y, double speed) {
 		super(x, y, "resources/bullet.png");
-		setSpeed(0, -200);
+		setBulletSpeed(speed);
 	}
 	
+	public void setBulletSpeed(double speed) {
+		setSpeed(0, -speed);
+	}
 }
 
+/**
+ * 文字实体类
+ */
 class TextEntity extends GameEntity{
 	
 	private String text;
-	
 
 	public TextEntity() {
 		super(0, 0);
 	}
 	
-	public TextEntity(int x, int y) {
-		super(x, y);
+	public TextEntity(String text) {
+		super(0, 0);
+		this.text = text;
+	}
+	
+	public TextEntity(String text, int x, int y) {
+		super(0, 0);
+		this.text = text;
 	}
 	
 	public String getText() {
@@ -283,4 +313,44 @@ class TextEntity extends GameEntity{
 		return getY();
 	}
 
+}
+
+/**
+ * 图形实体类
+ */
+class ShapeEntity extends GameEntity{
+	
+	private Shape shape;
+	private boolean isFilled = false;
+	
+	public ShapeEntity() {
+		super(0, 0);
+	}
+	
+	public ShapeEntity(Shape shape) {
+		super(0, 0);
+		this.shape = shape;
+	}
+	
+	public ShapeEntity(Shape shape, int x, int y) {
+		super(x, y);
+		this.shape = shape;
+	}
+
+	public Shape getShape() {
+		return shape;
+	}
+
+	public void setShape(Shape shape) {
+		this.shape = shape;
+	}
+
+	public boolean isFilled() {
+		return isFilled;
+	}
+
+	public void setFilled(boolean isFilled) {
+		this.isFilled = isFilled;
+	}
+	
 }

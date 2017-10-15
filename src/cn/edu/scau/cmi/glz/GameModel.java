@@ -2,62 +2,71 @@ package cn.edu.scau.cmi.glz;
 
 import java.util.ArrayList;
 
-import com.sun.xml.internal.fastinfoset.algorithm.IEEE754FloatingPointEncodingAlgorithm;
-
 /**
  * GameModel类用于储存游戏数据（Model）
  */
 public class GameModel {
 	
-	private ArrayList<ImageEntity> entityList;
-	private ArrayList<ImageEntity> enemyList;
-	private ArrayList<ImageEntity> bulletList;
-	private ArrayList<TextEntity> textList;
+	private ArrayList<ImageEntity> imageEntities;
+	private ArrayList<Enemy> enemies;
+	private ArrayList<Bullet> bullets;
+	private ArrayList<TextEntity> texts;
+	private ArrayList<ShapeEntity> shapes;
 	private PlayerPlane player;
 	
 	
 	public GameModel() {
-		entityList = new ArrayList<>();
-		enemyList = new ArrayList<>();
-		bulletList = new ArrayList<>();
-		textList = new ArrayList<>();
+		imageEntities = new ArrayList<>();
+		enemies = new ArrayList<>();
+		bullets = new ArrayList<>();
+		texts = new ArrayList<>();
+		shapes = new ArrayList<>();
 		player = null;
 	}
 	
-	public ArrayList<ImageEntity> getAllEntites() {
-		return entityList;
+	public ArrayList<ImageEntity> getImageEntites() {
+		return imageEntities;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<ImageEntity> getAllEntitesCopy(){
-		return (ArrayList<ImageEntity>) entityList.clone();
+	public ArrayList<ImageEntity> getImageEntitesCopy(){
+		return (ArrayList<ImageEntity>) imageEntities.clone();
 	}
 	
-	public ArrayList<ImageEntity> getEnemies(){
-		return enemyList;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public ArrayList<ImageEntity> getEnemiesCopy(){
-		return (ArrayList<ImageEntity>) enemyList.clone();
-	}
-	
-	public ArrayList<ImageEntity> getBullets(){
-		return bulletList;
+	public ArrayList<Enemy> getEnemies(){
+		return enemies;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<ImageEntity> getBulletsCopy(){
-		return (ArrayList<ImageEntity>) bulletList.clone();
+	public ArrayList<Enemy> getEnemiesCopy(){
+		return (ArrayList<Enemy>) enemies.clone();
+	}
+	
+	public ArrayList<Bullet> getBullets(){
+		return bullets;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<Bullet> getBulletsCopy(){
+		return (ArrayList<Bullet>) bullets.clone();
 	}
 	
 	public ArrayList<TextEntity> getTexts() {
-		return textList;
+		return texts;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public ArrayList<TextEntity> getTextsCopy(){
-		return (ArrayList<TextEntity>) textList.clone();
+		return (ArrayList<TextEntity>) texts.clone();
+	}
+	
+	public ArrayList<ShapeEntity> getShapes() {
+		return shapes;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<ShapeEntity> getShapesCopy(){
+		return (ArrayList<ShapeEntity>) shapes.clone();
 	}
 	
 	public void setPlayer(PlayerPlane player) {
@@ -68,24 +77,24 @@ public class GameModel {
 		return player;
 	}
 	
-	public void addEnemy(ImageEntity enemy) {
-		entityList.add(enemy);
-		enemyList.add(enemy);
+	public void addEnemy(Enemy enemy) {
+		imageEntities.add(enemy);
+		enemies.add(enemy);
 	}
 	
-	public void addBullet(ImageEntity bullet) {
-		entityList.add(bullet);
-		bulletList.add(bullet);
+	public void addBullet(Bullet bullet) {
+		imageEntities.add(bullet);
+		bullets.add(bullet);
 	}
 	
-	public void deleteEnemy(ImageEntity enemy) {
-		enemyList.remove(enemy);
-		entityList.remove(enemy);
+	public void deleteEnemy(Enemy enemy) {
+		enemies.remove(enemy);
+		imageEntities.remove(enemy);
 	}
 	
-	public void deleteBullet(ImageEntity bullet) {
-		bulletList.remove(bullet);
-		entityList.remove(bullet);
+	public void deleteBullet(Bullet bullet) {
+		bullets.remove(bullet);
+		imageEntities.remove(bullet);
 	}
 
 }

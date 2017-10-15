@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 
@@ -40,6 +41,15 @@ public class VisHelper {
     public static final Color White = new Color(0xFFFFFF);
     
     public static final Color Sky = new Color(0x3B2951);
+    
+    
+    
+    // 绘制图形
+    public static void drawShape(Graphics2D g, int x, int y, Shape shape, boolean isFilled) {
+    	
+    	if(isFilled) g.fill(shape);
+    	else g.draw(shape);
+    }
     
     // 绘制空心圆
     public static void strokeCircle(Graphics2D g, int x, int y, int r){
