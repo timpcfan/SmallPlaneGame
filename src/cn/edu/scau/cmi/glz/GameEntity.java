@@ -5,27 +5,37 @@ import java.awt.Point;
 
 import javax.swing.ImageIcon;
 
-import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
-
-import sun.reflect.generics.tree.VoidDescriptor;
-
 
 /**
  * GameEntite是所有游戏实体的基类
  */
-public class GameEntite {
+public class GameEntity {
 
 	private double x, y; // 实体左上角坐标
 	private double r; // 实体的半径，用于碰撞检测
 	private double vx, vy; // 实体的运动速度（像素/秒）
+	private double w, h; // 实体的宽和高
 
-	public GameEntite(double x, double y, double r) {
+	public GameEntity(double x, double y, double r, double w, double h) {
 		this.x = x;
 		this.y = y;
 		this.r = r;
+		this.w = w;
+		this.h = h;
 		this.vx = 0;
 		this.vy = 0;
 	}
+	
+	public GameEntity(double x, double y, double r) {
+		this.x = x;
+		this.y = y;
+		this.r = r;
+		this.w = 0;
+		this.h = 0;
+		this.vx = 0;
+		this.vy = 0;
+	}
+
 
 	public int getX() {
 		return (int)x;
@@ -47,6 +57,39 @@ public class GameEntite {
 		return r;
 	}
 	
+	public void setCenterX(double centerX) {
+		x = centerX - w / 2;
+	}
+	
+	public void setCenterY(double centerY) {
+		y = centerY - h / 2;
+	}
+	
+	public int getCenterX() {
+		return (int) (x + w / 2);
+	}
+	
+	public int getCenterY() {
+		return (int) (y + h / 2);
+	}
+	
+	public double getW() {
+		return w;
+	}
+
+	public void setW(double w) {
+		this.w = w;
+	}
+
+	public double getH() {
+		return h;
+	}
+
+	public void setH(double h) {
+		this.h = h;
+	}
+
+	
 	public void setSpeed(double vx, double vy) {
 		this.vx = vx;
 		this.vy = vy;
@@ -56,7 +99,7 @@ public class GameEntite {
 		return new Point((int)x, (int)y);
 	}
 
-	public boolean collideWith(GameEntite other) {
+	public boolean collideWith(GameEntity other) {
 		return (x - other.x) * (x - other.x) + (y - other.y) * (y - other.y) <= (r - other.r) * (r - other.r);
 	}
 	
@@ -67,19 +110,23 @@ public class GameEntite {
 }
 
 
-class ImageEntite extends GameEntite{
+class ImageEntity extends GameEntity{
 
 	private Image image;
 	
-	public ImageEntite(int x, int y, int r, Image image) {
+	public ImageEntity(double x, double y, double r, Image image) {
 		super(x, y, r);
 		this.image = image;
+		this.setW(this.image.getWidth(null));
+		this.setH(this.image.getHeight(null));
 	}
 	
-	public ImageEntite(int x, int y, int r, String imageURL) {
+	public ImageEntity(int x, int y, int r, String imageURL) {
 		super(x, y, r);
 		ImageIcon icon = new ImageIcon(imageURL);
         this.image = icon.getImage();
+		this.setW(this.image.getWidth(null));
+		this.setH(this.image.getHeight(null));
 	}
 	
 	public Image getImage() {
@@ -89,7 +136,7 @@ class ImageEntite extends GameEntite{
 	
 }
 
-class PlayerPlane extends ImageEntite{
+class PlayerPlane extends ImageEntity{
 	
 	private int life;
 	private int bullet;
@@ -133,7 +180,7 @@ class PlayerPlane extends ImageEntite{
 	
 }
 
-class Enemy extends ImageEntite{
+class Enemy extends ImageEntity{
 	
 	private int life = 1;
 	
@@ -146,7 +193,7 @@ class Enemy extends ImageEntite{
 	}
 }
 
-class Bullet extends ImageEntite{
+class Bullet extends ImageEntity{
 
 	public Bullet(int x, int y, int r) {
 		super(x, y, r, "resources/bullet.png");

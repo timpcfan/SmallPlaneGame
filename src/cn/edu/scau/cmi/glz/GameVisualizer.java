@@ -144,8 +144,8 @@ public class GameVisualizer {
 				model.getPlayer().setY(model.getPlayer().getY() + d);
 			
 			// entities move
-			for(GameEntite entite: model.getAllEntitesCopy()) {
-				entite.move(passedSeconds);
+			for(GameEntity entity: model.getAllEntitesCopy()) {
+				entity.move(passedSeconds);
 			}
 			
 

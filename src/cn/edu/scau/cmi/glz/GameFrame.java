@@ -89,8 +89,8 @@ public class GameFrame extends JFrame{
             if(model != null) {
 	            VisHelper.putImage(g2d, model.getPlayer().getX(), model.getPlayer().getY(), model.getPlayer().getImage());
 	            
-	            for(ImageEntite entite: model.getAllEntitesCopy()) {
-	            	VisHelper.putImage(g2d, entite.getX(), entite.getY(), entite.getImage());
+	            for(ImageEntity entity: model.getAllEntitesCopy()) {
+	            	VisHelper.putImage(g2d, entity.getX(), entity.getY(), entity.getImage());
 	            	
 	            }
 	        

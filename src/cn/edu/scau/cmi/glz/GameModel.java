@@ -9,10 +9,10 @@ import com.sun.xml.internal.fastinfoset.algorithm.IEEE754FloatingPointEncodingAl
  */
 public class GameModel {
 	
-	private ArrayList<ImageEntite> entiteList;
-	private ArrayList<ImageEntite> enemyList;
-	private ArrayList<ImageEntite> bulletList;
-	private ImageEntite player;
+	private ArrayList<ImageEntity> entiteList;
+	private ArrayList<ImageEntity> enemyList;
+	private ArrayList<ImageEntity> bulletList;
+	private PlayerPlane player;
 	
 	
 	public GameModel() {
@@ -22,37 +22,37 @@ public class GameModel {
 		player = null;
 	}
 	
-	public ArrayList<ImageEntite> getAllEntites() {
+	public ArrayList<ImageEntity> getAllEntites() {
 		return entiteList;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public ArrayList<ImageEntite> getAllEntitesCopy(){
-		return (ArrayList<ImageEntite>) entiteList.clone();
+	public ArrayList<ImageEntity> getAllEntitesCopy(){
+		return (ArrayList<ImageEntity>) entiteList.clone();
 	}
 	
-	public ArrayList<ImageEntite> getEnemies(){
+	public ArrayList<ImageEntity> getEnemies(){
 		return enemyList;
 	}
 	
-	public ArrayList<ImageEntite> getBullets(){
+	public ArrayList<ImageEntity> getBullets(){
 		return bulletList;
 	}
 	
-	public void setPlayer(ImageEntite player) {
+	public void setPlayer(PlayerPlane player) {
 		this.player = player;
 	}
 	
-	public ImageEntite getPlayer() {
+	public ImageEntity getPlayer() {
 		return player;
 	}
 	
-	public void addEnemy(ImageEntite enemy) {
+	public void addEnemy(ImageEntity enemy) {
 		entiteList.add(enemy);
 		enemyList.add(enemy);
 	}
 	
-	public void addBullet(ImageEntite bullet) {
+	public void addBullet(ImageEntity bullet) {
 		entiteList.add(bullet);
 		bulletList.add(bullet);
 	}
