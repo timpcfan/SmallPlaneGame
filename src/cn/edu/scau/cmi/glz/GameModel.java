@@ -12,6 +12,7 @@ public class GameModel {
 	private ArrayList<ImageEntity> entityList;
 	private ArrayList<ImageEntity> enemyList;
 	private ArrayList<ImageEntity> bulletList;
+	private ArrayList<TextEntity> textList;
 	private PlayerPlane player;
 	
 	
@@ -19,6 +20,7 @@ public class GameModel {
 		entityList = new ArrayList<>();
 		enemyList = new ArrayList<>();
 		bulletList = new ArrayList<>();
+		textList = new ArrayList<>();
 		player = null;
 	}
 	
@@ -47,6 +49,15 @@ public class GameModel {
 	@SuppressWarnings("unchecked")
 	public ArrayList<ImageEntity> getBulletsCopy(){
 		return (ArrayList<ImageEntity>) bulletList.clone();
+	}
+	
+	public ArrayList<TextEntity> getTexts() {
+		return textList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<TextEntity> getTextsCopy(){
+		return (ArrayList<TextEntity>) textList.clone();
 	}
 	
 	public void setPlayer(PlayerPlane player) {
@@ -78,3 +89,4 @@ public class GameModel {
 	}
 
 }
+

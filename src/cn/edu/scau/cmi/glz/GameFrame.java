@@ -91,7 +91,10 @@ public class GameFrame extends JFrame{
 	            
 	            for(ImageEntity entity: model.getAllEntitesCopy()) {
 	            	VisHelper.putImage(g2d, entity.getX(), entity.getY(), entity.getImage());
-	            	
+	            }
+	            
+	            for(TextEntity entity: model.getTextsCopy()) {
+	            	VisHelper.drawText(g2d, entity.getText(), entity.getCenterX(), entity.getCenterY());
 	            }
 	        
             }
