@@ -185,12 +185,46 @@ class Enemy extends ImageEntity{
 		super(0, 0, "resources/stone1.png");
 	}
 	
-	public Enemy(int x, int y) {
-		super(x, y, "resources/stone1.png");
+	public Enemy(int x, int y, Image image) {
+		super(x, y, image);
+	}
+	
+	public Enemy(int x, int y, String imageURL) {
+		super(x, y, imageURL);
+	}
+	
+	public int getLife() {
+		return life;
+	}
+	
+	public void setLife(int life) {
+		this.life = life;
 	}
 	
 	public boolean isDead() {
 		return (life == 0);
+	}
+}
+
+class Stone1 extends Enemy{
+	
+	public Stone1() {
+		super(0, 0, "resources/stone1.png");
+	}
+	
+	public Stone1(int x, int y) {
+		super(x, y, "resources/stone1.png");
+	}
+}
+
+class Stone2 extends Enemy{
+	
+	public Stone2() {
+		super(0, 0, "resources/stone2.png");
+	}
+	
+	public Stone2(int x, int y) {
+		super(x, y, "resources/stone2.png");
 	}
 }
 

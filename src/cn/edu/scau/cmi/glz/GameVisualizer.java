@@ -47,14 +47,24 @@ public class GameVisualizer {
 					VisHelper.pause(enemySpawnInterval);
 					
 					Enemy enemy = new Enemy();
+					Stone1 stone1 = new Stone1();
+					Stone2 stone2 = new Stone2();
 					
 					int x = (int)(Math.random() * (frame.getCanvasWidth() - enemy.getW()));
 					int y = -(int) enemy.getH();
 					int vx = (int)(Math.random() * 50);
 					int vy = (int)(Math.random() * 400 + 200);
 					
-					enemy.setX(x);
-					enemy.setY(y);
+//					enemy.setX(x);
+//					enemy.setY(y);
+//					stone1.setX(x);
+//					stone1.setY(y);
+//					stone2.setX(x);
+//					stone2.setY(y);
+//					
+//					stone1.setSpeed(vx, vy);
+					
+					
 					if(x < frame.getCanvasWidth() / 2) {
 						enemy.setSpeed(vx, vy);
 					}
@@ -63,6 +73,7 @@ public class GameVisualizer {
 					}
 					
 					model.addEnemy(enemy);
+//					model.addEnemy(stone2);
 				}
 			}).start();
 		});
