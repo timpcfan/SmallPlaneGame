@@ -25,11 +25,12 @@ public class EnemyThread extends Thread{
 			
 			int x = (int)(Math.random() * frame.getCanvasWidth());
 			int y = -113;
-			int vy = (int)(Math.random() * 100);
+			int vx = (int)(Math.random() * 100) - 50;
+			int vy = (int)(Math.random() * 300 + 50);
 			
 			
 			Enemy enemy = new Enemy(x, y);
-			enemy.setSpeed(0, vy);
+			enemy.setSpeed(vx, vy);
 			
 			model.addEnemy(enemy);
 			
