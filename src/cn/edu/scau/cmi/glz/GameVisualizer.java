@@ -22,8 +22,7 @@ public class GameVisualizer {
 	public static final int DEFAULT_FPS = 60; // 控制动画帧率
 
 	private boolean[] keys = new boolean[5];
-
-	public static final int PAUSE = 40; // 控制动画刷新间隔
+	private int enemySpawnInterval = 1000;
 
 	public GameVisualizer(String title, int width, int height) {
 		// TODO 数据初始化
@@ -40,7 +39,30 @@ public class GameVisualizer {
 				run();
 			}).start();
 			
-			new EnemyThread(frame, model, 1000).start();
+			
+			// 添加敌人线程
+			new Thread(() -> {
+				while(true) {
+					
+					VisHelper.pause(enemySpawnInterval);
+					
+					int x = (int)(Math.random() * frame.getCanvasWidth());
+					int y = -113;
+					int vx = (int)(Math.random() * 50);
+					int vy = (int)(Math.random() * 100);
+					
+					
+					Enemy enemy = new Enemy(x, y);
+					if(x < frame.getCanvasWidth() / 2) {
+						enemy.setSpeed(vx, vy);
+					}
+					else {
+						enemy.setSpeed(-vx, vy);
+					}
+					
+					model.addEnemy(enemy);
+				}
+			}).start();
 		});
 
 	}
