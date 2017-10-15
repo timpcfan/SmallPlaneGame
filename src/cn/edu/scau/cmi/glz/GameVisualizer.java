@@ -27,7 +27,7 @@ public class GameVisualizer {
 	public GameVisualizer(String title, int width, int height) {
 		// TODO 数据初始化
 		model = new GameModel();
-		model.setPlayer(new PlayerPlane(300, 600));
+		model.setPlayer(new PlayerPlane(300, 600, 300));
 
 		EventQueue.invokeLater(() -> {
 			frame = new GameFrame(title, width, height);
@@ -38,46 +38,61 @@ public class GameVisualizer {
 			new Thread(() -> {
 				run();
 			}).start();
-			
-			
+
 			// 添加敌人线程
 			new Thread(() -> {
-				while(true) {
-					
+				while (true) {
+
 					VisHelper.pause(enemySpawnInterval);
-					
+
 					Enemy enemy = new Enemy();
 					Stone1 stone1 = new Stone1();
 					Stone2 stone2 = new Stone2();
-					
-					int x = (int)(Math.random() * (frame.getCanvasWidth() - enemy.getW()));
+
+					int x = (int) (Math.random() * (frame.getCanvasWidth() - enemy.getW()));
 					int y = -(int) enemy.getH();
-					int vx = (int)(Math.random() * 50);
-					int vy = (int)(Math.random() * 400 + 200);
-					
-//					enemy.setX(x);
-//					enemy.setY(y);
-//					stone1.setX(x);
-//					stone1.setY(y);
-//					stone2.setX(x);
-//					stone2.setY(y);
-//					
-//					stone1.setSpeed(vx, vy);
-					
-					
-					if(x < frame.getCanvasWidth() / 2) {
+					int vx = (int) (Math.random() * 50);
+					int vy = (int) (Math.random() * 400 + 200);
+
+					// enemy.setX(x);
+					// enemy.setY(y);
+					// stone1.setX(x);
+					// stone1.setY(y);
+					// stone2.setX(x);
+					// stone2.setY(y);
+					//
+					// stone1.setSpeed(vx, vy);
+
+					if (x < frame.getCanvasWidth() / 2) {
 						enemy.setSpeed(vx, vy);
-					}
-					else {
+					} else {
 						enemy.setSpeed(-vx, vy);
 					}
-					
+
 					model.addEnemy(enemy);
-//					model.addEnemy(stone2);
+					// model.addEnemy(stone2);
+				}
+
+			}).start();
+
+			new Thread(() -> {
+				while (true) {
+
+					VisHelper.pause(10);
+					if (keys[4]) {
+						Bullet bullet = new Bullet();
+						bullet.setCenterX(model.getPlayer().getCenterX());
+						bullet.setY(model.getPlayer().getY() - bullet.getH());
+						bullet.setSpeed(0, -500);
+						model.addBullet(bullet);
+
+						VisHelper.pause(model.getPlayer().getFireDelay());
+					}
+
 				}
 			}).start();
-		});
 
+		});
 	}
 
 	/**
@@ -131,14 +146,13 @@ public class GameVisualizer {
 		}
 	}
 
-	
 	/**
 	 * 动画逻辑
 	 */
 	private void run() {
-		
+
 		long oldtime = 0;
-		
+
 		long fpsTime = (long) ((Double.valueOf(1000) / Double.valueOf(DEFAULT_FPS)) * 1000000);
 		long now = 0; // 绘制图像前的时间戳
 		long total = 0; // 每次绘制图像耗时（毫秒）
@@ -158,15 +172,13 @@ public class GameVisualizer {
 			while ((System.nanoTime() - now) < fpsTime) {
 				System.nanoTime(); // 使用循环，精确控制每帧绘制时长
 			}
-			
+
 			// 计算上一帧到这一帧所花的时间（秒）
 			double passedSeconds = (System.nanoTime() - oldtime) / 1000000000.;
 			oldtime = System.nanoTime();
-			
-			
-			
-			// 更新数据  //
-			
+
+			// 更新数据 //
+
 			// player move
 			int d = 5;
 			if (keys[0] && model.getPlayer().getX() >= 0)
@@ -177,18 +189,30 @@ public class GameVisualizer {
 				model.getPlayer().setY(model.getPlayer().getY() - d);
 			if (keys[3] && (model.getPlayer().getY() + model.getPlayer().getH() <= frame.getCanvasHeight()))
 				model.getPlayer().setY(model.getPlayer().getY() + d);
-			
+
 			// entities move
-			for(GameEntity entity: model.getAllEntitesCopy()) {
+			for (GameEntity entity : model.getAllEntitesCopy()) {
 				entity.move(passedSeconds);
 			}
-			
-			for(ImageEntity enemy: model.getEnemiesCopy()) {
-				if(enemy.collideWith(model.getPlayer(), 0.85)) {
+
+			for (ImageEntity enemy : model.getEnemiesCopy()) {
+				if (enemy.collideWith(model.getPlayer(), 0.85)) {
 					model.deleteEnemy(enemy);
 				}
 			}
-			
+
+			for (ImageEntity bullet : model.getBulletsCopy()) {
+				for (ImageEntity enemy : model.getEnemiesCopy()) {
+					if (bullet.collideWith(enemy, 1)) {
+
+						System.out.println("enemyW：" + enemy.getW() + " H:" + enemy.getH());
+
+						model.deleteEnemy(enemy);
+						model.deleteBullet(bullet);
+						break;
+					}
+				}
+			}
 
 		}
 

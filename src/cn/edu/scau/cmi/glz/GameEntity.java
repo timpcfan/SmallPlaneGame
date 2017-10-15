@@ -135,11 +135,21 @@ class PlayerPlane extends ImageEntity{
 	
 	private int life;
 	private int bullet;
+	private int fireDelay;
 	
-	public PlayerPlane(int x, int y) {
+	public PlayerPlane(int x, int y, int fireDelay) {
 		super(x, y, "resources/plane.png");
+		this.fireDelay = fireDelay;
 	}
 	
+	public int getFireDelay() {
+		return fireDelay;
+	}
+
+	public void setFireDelay(int fireDelay) {
+		this.fireDelay = fireDelay;
+	}
+
 	public void fire() {
 		bullet --;
 	}
@@ -228,9 +238,14 @@ class Stone2 extends Enemy{
 
 class Bullet extends ImageEntity{
 
+	public Bullet() {
+		super(0, 0, "resources/bullet.png");
+		setSpeed(0, -200);
+	}
+	
 	public Bullet(int x, int y) {
 		super(x, y, "resources/bullet.png");
-		setSpeed(0, 20);
+		setSpeed(0, -200);
 	}
 	
 }

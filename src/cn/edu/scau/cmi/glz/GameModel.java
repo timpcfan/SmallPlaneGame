@@ -53,7 +53,7 @@ public class GameModel {
 		this.player = player;
 	}
 	
-	public ImageEntity getPlayer() {
+	public PlayerPlane getPlayer() {
 		return player;
 	}
 	
@@ -70,6 +70,11 @@ public class GameModel {
 	public void deleteEnemy(ImageEntity enemy) {
 		enemyList.remove(enemy);
 		entityList.remove(enemy);
+	}
+	
+	public void deleteBullet(ImageEntity bullet) {
+		bulletList.remove(bullet);
+		entityList.remove(bullet);
 	}
 
 }
