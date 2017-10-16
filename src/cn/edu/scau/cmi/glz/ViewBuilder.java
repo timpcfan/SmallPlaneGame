@@ -106,6 +106,15 @@ public class ViewBuilder {
 		return model;
 	}
 	
+	public static GameModel buildGamingView(GameFrame frame) {
+		GameModel model = new GameModel();
+		PlayerPlane player = new PlayerPlane(0, 0, 300);
+		player.setCenterX(frame.getCanvasWidth() / 2);
+		player.setCenterY(frame.getCanvasHeight() * 3 / 4);
+		model.setPlayer(player);
+		return model;
+	}
+	
 	/**
 	 * 此main方法用于测试界面
 	 */

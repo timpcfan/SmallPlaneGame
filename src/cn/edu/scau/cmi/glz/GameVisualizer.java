@@ -18,19 +18,21 @@ public class GameVisualizer {
 
 	private boolean[] keys = new boolean[5];
 	private int enemySpawnInterval = 1000;
-	private boolean isRunning = true;
+	private boolean isRunning;
+	private ViewType currentView; // 指示当前
 
 	public GameVisualizer(String title, int width, int height) {
 
-		model = new GameModel();
-		model.setPlayer(new PlayerPlane(300, 600, 300));
-
 		EventQueue.invokeLater(() -> {
 			frame = new GameFrame(title, width, height);
-
 			frame.addKeyListener(new GameKeyListener());
 			frame.addMouseListener(new GameMouseListener());
-
+		
+			// 加载主界面
+			model = ViewBuilder.buildMainView(frame);
+			currentView = ViewType.MAIN;
+			isRunning = false;
+			
 			// 绘制与游戏逻辑线程
 			new Thread(() -> { run(); }).start();
 
@@ -126,40 +128,68 @@ public class GameVisualizer {
 
 			// 更新数据 //
 
-			// player move
-			int d = 5;
-			if (keys[0] && model.getPlayer().getX() >= 0)
-				model.getPlayer().setX(model.getPlayer().getX() - d);
-			if (keys[1] && (model.getPlayer().getX() + model.getPlayer().getW()) <= frame.getCanvasWidth())
-				model.getPlayer().setX(model.getPlayer().getX() + d);
-			if (keys[2] && model.getPlayer().getY() >= 0)
-				model.getPlayer().setY(model.getPlayer().getY() - d);
-			if (keys[3] && (model.getPlayer().getY() + model.getPlayer().getH() <= frame.getCanvasHeight()))
-				model.getPlayer().setY(model.getPlayer().getY() + d);
-
-			// entities move
+			// 实体移动
 			for (GameEntity entity : model.getImageEntitesCopy()) {
 				entity.move(passedSeconds);
 			}
-
-			for (Enemy enemy : model.getEnemiesCopy()) {
-				if (enemy.collideWith(model.getPlayer(), 0.85)) {
-					model.deleteEnemy(enemy);
-				}
-			}
-
-			for (Bullet bullet : model.getBulletsCopy()) {
+			
+			
+			if(currentView == ViewType.GAMING) {
+				// 玩家移动
+				int d = 5;
+				if (keys[0] && model.getPlayer().getX() >= 0)
+					model.getPlayer().setX(model.getPlayer().getX() - d);
+				if (keys[1] && (model.getPlayer().getX() + model.getPlayer().getW()) <= frame.getCanvasWidth())
+					model.getPlayer().setX(model.getPlayer().getX() + d);
+				if (keys[2] && model.getPlayer().getY() >= 0)
+					model.getPlayer().setY(model.getPlayer().getY() - d);
+				if (keys[3] && (model.getPlayer().getY() + model.getPlayer().getH() <= frame.getCanvasHeight()))
+					model.getPlayer().setY(model.getPlayer().getY() + d);
+	
+				
+				// 检测玩家与敌人碰撞
 				for (Enemy enemy : model.getEnemiesCopy()) {
-					if (bullet.collideWith(enemy, 0.85)) {
+					if (enemy.collideWith(model.getPlayer(), 0.85)) {
 						model.deleteEnemy(enemy);
-						model.deleteBullet(bullet);
+						model = ViewBuilder.buildGameoverView(frame);
+						currentView = ViewType.GAMEOVER;
+						isRunning = false;
 						break;
 					}
 				}
-			}
+	
+				// 检测玩家与子弹碰撞
+				for (Bullet bullet : model.getBulletsCopy()) {
+					for (Enemy enemy : model.getEnemiesCopy()) {
+						if (bullet.collideWith(enemy, 0.85)) {
+							model.deleteEnemy(enemy);
+							model.deleteBullet(bullet);
+							break;
+						}
+					}
+				}
+			} // end if GAMING
+			
+			if(currentView == ViewType.MAIN) {
+				if(keys[4]) {
+					model = ViewBuilder.buildGamingView(frame);
+					currentView = ViewType.GAMING;
+					isRunning = true;
+				}
+				
+			} // end if MAIN
+			
+			if(currentView == ViewType.GAMEOVER) {
+				if(keys[4]) {
+					model = ViewBuilder.buildGamingView(frame);
+					currentView = ViewType.GAMING;
+					isRunning = true;
+				}
+				
+			} // end if GAMEOVER
 
+			
 		}
-
 	}
 	
 	/**
@@ -167,9 +197,9 @@ public class GameVisualizer {
 	 */
 	private void enemyTask() {
 		while (true) {
+			VisHelper.pause(10);
 			if (isRunning) {
-				VisHelper.pause(enemySpawnInterval);
-
+				
 				Enemy enemy = new Stone1();
 
 				int x = (int) (Math.random() * (frame.getCanvasWidth() - enemy.getW()));
@@ -187,6 +217,7 @@ public class GameVisualizer {
 				}
 				
 				model.addEnemy(enemy);
+				VisHelper.pause(enemySpawnInterval);
 			}
 		}
 	}
@@ -196,8 +227,8 @@ public class GameVisualizer {
 	 */
 	private void bulletTask() {
 		while (true) {
-			if (isRunning) {
-				VisHelper.pause(10);
+			VisHelper.pause(10);
+			if (isRunning) {		
 				
 				if (keys[4]) {
 					Bullet bullet = new Bullet();
@@ -221,4 +252,8 @@ public class GameVisualizer {
 		GameVisualizer visualizer = new GameVisualizer("PlaneGame", 500, 800);
 	}
 
+}
+
+enum ViewType{
+	MAIN, GAMING, GAMEOVER
 }
