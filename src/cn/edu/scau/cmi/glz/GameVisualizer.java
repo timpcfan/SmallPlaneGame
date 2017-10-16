@@ -31,56 +31,14 @@ public class GameVisualizer {
 			frame.addKeyListener(new GameKeyListener());
 			frame.addMouseListener(new GameMouseListener());
 
-			new Thread(() -> {
-				run();
-			}).start();
+			// 绘制与游戏逻辑线程
+			new Thread(() -> { run(); }).start();
 
 			// 添加敌人线程
-			new Thread(() -> {
-				while (true) {
-					if (isRunning) {
-						VisHelper.pause(enemySpawnInterval);
-
-						Enemy enemy = new Stone1();
-
-						int x = (int) (Math.random() * (frame.getCanvasWidth() - enemy.getW()));
-						int y = -(int) enemy.getH();
-						int vx = (int) (Math.random() * 50);
-						int vy = (int) (Math.random() * 400 + 200);
-
-						enemy.setX(x);
-						enemy.setY(y);
-	
-						if (x < frame.getCanvasWidth() / 2) {
-							enemy.setSpeed(vx, vy);
-						} else {
-							enemy.setSpeed(-vx, vy);
-						}
-						
-						model.addEnemy(enemy);
-					}
-				}
-
-			}).start();
+			new Thread(() -> { enemyTask(); }).start();
 
 			// 添加子弹线程
-			new Thread(() -> {
-				while (true) {
-					if (isRunning) {
-						VisHelper.pause(10);
-						if (keys[4]) {
-							Bullet bullet = new Bullet();
-							bullet.setCenterX(model.getPlayer().getCenterX());
-							bullet.setY(model.getPlayer().getY() - bullet.getH());
-							bullet.setBulletSpeed(500);
-							model.addBullet(bullet);
-
-							VisHelper.pause(model.getPlayer().getFireDelay());
-						}
-
-					}
-				}
-			}).start();
+			new Thread(() -> { bulletTask(); }).start();
 
 		});
 	}
@@ -202,6 +160,56 @@ public class GameVisualizer {
 
 		}
 
+	}
+	
+	/**
+	 * 敌人生成任务
+	 */
+	private void enemyTask() {
+		while (true) {
+			if (isRunning) {
+				VisHelper.pause(enemySpawnInterval);
+
+				Enemy enemy = new Stone1();
+
+				int x = (int) (Math.random() * (frame.getCanvasWidth() - enemy.getW()));
+				int y = -(int) enemy.getH();
+				int vx = (int) (Math.random() * 50);
+				int vy = (int) (Math.random() * 400 + 200);
+
+				enemy.setX(x);
+				enemy.setY(y);
+
+				if (x < frame.getCanvasWidth() / 2) {
+					enemy.setSpeed(vx, vy);
+				} else {
+					enemy.setSpeed(-vx, vy);
+				}
+				
+				model.addEnemy(enemy);
+			}
+		}
+	}
+	
+	/**
+	 * 子弹生成任务
+	 */
+	private void bulletTask() {
+		while (true) {
+			if (isRunning) {
+				VisHelper.pause(10);
+				
+				if (keys[4]) {
+					Bullet bullet = new Bullet();
+					bullet.setCenterX(model.getPlayer().getCenterX());
+					bullet.setY(model.getPlayer().getY() - bullet.getH());
+					bullet.setBulletSpeed(500);
+					model.addBullet(bullet);
+
+					VisHelper.pause(model.getPlayer().getFireDelay());
+				}
+			}
+		}
 	}
 
 	/**
