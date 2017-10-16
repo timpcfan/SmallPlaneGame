@@ -21,9 +21,34 @@ public class ViewBuilder {
 		GameModel model = new GameModel();
 		// TODO 向model中添加实体构成游戏结束界面
 		
+		//添加文字
+		int buttonInterval = 50;
+		TextEntity title = TextEntity.buildTextEntity("Game Over", 60, 
+										frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2 - 100, 
+										VisHelper.Red);
+		model.addText(title);
+		TextEntity buttonAgain = TextEntity.buildTextEntity("play again", 30, 
+										frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2, 
+										VisHelper.Orange);
+		model.addText(buttonAgain);
+		TextEntity buttonMain = TextEntity.buildTextEntity("Main", 30, 
+										frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2 + buttonInterval * 2, 
+										VisHelper.Yellow);
+		model.addText(buttonMain);
+		
+		//add shape
+		ShapeEntity playRect = ShapeEntity.buildRectangleEntity(frame.getCanvasWidth() / 2 - 150, frame.getCanvasHeight() / 2 - 45, 
+										300, 60, 
+										VisHelper.Sky, true);
+		model.addShape(playRect);
+		ShapeEntity mainRect = ShapeEntity.buildRectangleEntity(frame.getCanvasWidth() / 2 - 150, frame.getCanvasHeight() / 2 + 55, 
+										300, 60, 
+										VisHelper.Sky, true);
+		model.addShape(mainRect);
+		
 		return model;
 	}
-	
+		
 	/**
 	 * 生成一个示例界面
 	 * @return 一个示例界面数据模型Model
@@ -62,7 +87,7 @@ public class ViewBuilder {
 	 */
 	public static void main(String[] args) {
 		GameFrame frame = new GameFrame("测试用界面", 500, 800);
-		GameModel model = buildDemoView(frame); // 这里将model赋值成需要测试的界面数据模型Model
+		GameModel model = buildGameoverView(frame); // 这里将model赋值成需要测试的界面数据模型Model
 		frame.render(model);
 	}
 
