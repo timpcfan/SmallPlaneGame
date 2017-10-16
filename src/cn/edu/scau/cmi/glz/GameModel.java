@@ -77,6 +77,14 @@ public class GameModel {
 		return player;
 	}
 	
+	public void addImage(ImageEntity imageEntity) {
+		imageEntities.add(imageEntity);
+	}
+	
+	public void deleteImage(ImageEntity imageEntity) {
+		imageEntities.remove(imageEntity);
+	}
+	
 	public void addEnemy(Enemy enemy) {
 		imageEntities.add(enemy);
 		enemies.add(enemy);
@@ -95,6 +103,31 @@ public class GameModel {
 	public void deleteBullet(Bullet bullet) {
 		bullets.remove(bullet);
 		imageEntities.remove(bullet);
+	}
+	
+	public void addText(TextEntity textEntity) {
+		texts.add(textEntity);
+	}
+	
+	public void deleteText(TextEntity textEntity) {
+		texts.remove(textEntity);
+	}
+	
+	public void addShape(ShapeEntity shapeEntity) {
+		shapes.add(shapeEntity);
+	}
+	
+	public void deleteShape(ShapeEntity shapeEntity) {
+		shapes.remove(shapeEntity);
+	}
+	
+	public void clearAll() {
+		imageEntities.clear();
+		enemies.clear();
+		bullets.clear();
+		texts.clear();
+		shapes.clear();
+		player = null;
 	}
 
 }

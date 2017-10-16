@@ -1,8 +1,11 @@
 package cn.edu.scau.cmi.glz;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Shape;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 
 import javax.swing.ImageIcon;
 
@@ -277,20 +280,27 @@ class Bullet extends ImageEntity{
  */
 class TextEntity extends GameEntity{
 	
-	private String text;
+	private String text; // 储存的文字
+	private float size; // 字号大小
+	private Color color; // 颜色
 
-	public TextEntity() {
+	private TextEntity() {
 		super(0, 0);
+		this.text = "";
+		this.size = 40;
 	}
 	
-	public TextEntity(String text) {
+	private TextEntity(String text, float size) {
 		super(0, 0);
 		this.text = text;
+		this.size = size;
 	}
 	
-	public TextEntity(String text, int x, int y) {
-		super(0, 0);
+	private TextEntity(String text, float size, int centerx, int centery, Color color) {
+		super(centerx, centery);
 		this.text = text;
+		this.size = size;
+		this.color = color;
 	}
 	
 	public String getText() {
@@ -309,8 +319,41 @@ class TextEntity extends GameEntity{
 		setY(y);
 	}
 	
+	public int getCenterX() {
+		return getX();
+	}
+	
 	public int getCenterY() {
 		return getY();
+	}
+
+	public float getFontSize() {
+		return size;
+	}
+	
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
+	public void setFontSize(float size) {
+		this.size = size;
+	}
+	
+	/**
+	 * 构建一个文字TextEntity对象
+	 * @param text 文本内容
+	 * @param size 字号大小
+	 * @param centerx 中心x坐标
+	 * @param centery 中心y坐标
+	 * @param color 颜色
+	 * @return 文字实例TextEntity对象
+	 */
+	public static TextEntity buildTextEntity(String text, int size, int centerx, int centery, Color color) {
+		return new TextEntity(text, size, centerx, centery, color);
 	}
 
 }
@@ -321,18 +364,19 @@ class TextEntity extends GameEntity{
 class ShapeEntity extends GameEntity{
 	
 	private Shape shape;
+	private Color color;
 	private boolean isFilled = false;
 	
-	public ShapeEntity() {
+	private ShapeEntity() {
 		super(0, 0);
 	}
 	
-	public ShapeEntity(Shape shape) {
+	private ShapeEntity(Shape shape) {
 		super(0, 0);
 		this.shape = shape;
 	}
 	
-	public ShapeEntity(Shape shape, int x, int y) {
+	private ShapeEntity(Shape shape, double x, double y) {
 		super(x, y);
 		this.shape = shape;
 	}
@@ -345,12 +389,79 @@ class ShapeEntity extends GameEntity{
 		this.shape = shape;
 	}
 
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
 	public boolean isFilled() {
 		return isFilled;
 	}
 
 	public void setFilled(boolean isFilled) {
 		this.isFilled = isFilled;
+	}
+	
+	/**
+	 * 构建一个圆形ShapeEntity对象
+	 * @param centerx 圆心x坐标
+	 * @param centery 圆心y坐标
+	 * @param r	圆的半径
+	 * @param color 颜色
+	 * @param isFilled 是否填充
+	 * @return 圆形ShapeEntity对象
+	 */
+	public static ShapeEntity buildCircleEntity(double centerx, double centery, double r, Color color, boolean isFilled) {
+		Ellipse2D circle = new Ellipse2D.Double(centerx-r, centery-r, 2*r, 2*r);
+		ShapeEntity circleEntity = new ShapeEntity(circle, circle.getX(), circle.getY());
+		circleEntity.setColor(color);
+		circleEntity.setFilled(isFilled);
+		circleEntity.setW(2*r);
+		circleEntity.setH(2*r);
+		return circleEntity;
+	}
+	
+	/**
+	 * 构建一个椭圆形ShapeEntity对象
+	 * @param x 左上角x坐标
+	 * @param y 左上角y坐标
+	 * @param w 椭圆的宽度
+	 * @param h 椭圆的高度
+	 * @param color 颜色
+	 * @param isFilled 是否填充
+	 * @return 椭圆形ShapeEntity对象
+	 */
+	public static ShapeEntity buildEllipseEntity(double x, double y, double w, double h, Color color, boolean isFilled) {
+		Ellipse2D ellipse = new Ellipse2D.Double(x, y, w, h);
+		ShapeEntity ellipseEntity = new ShapeEntity(ellipse, x, y);
+		ellipseEntity.setColor(color);
+		ellipseEntity.setFilled(isFilled);
+		ellipseEntity.setW(w);
+		ellipseEntity.setH(h);
+		return ellipseEntity;
+	}
+	
+	/**
+	 * 构建一个矩形ShapeEntity对象
+	 * @param x 左上角x坐标
+	 * @param y 左上角y坐标
+	 * @param w 矩形的宽度
+	 * @param h 矩形的高度
+	 * @param color 颜色
+	 * @param isFilled 是否填充
+	 * @return 矩形ShapeEntity对象
+	 */
+	public static ShapeEntity buildRectangleEntity(double x, double y, double w, double h, Color color, boolean isFilled) {
+		Rectangle2D rectangle = new Rectangle2D.Double(x, y, w, h);
+		ShapeEntity rectEntity = new ShapeEntity(rectangle, x, y);
+		rectEntity.setColor(color);
+		rectEntity.setFilled(isFilled);
+		rectEntity.setW(w);
+		rectEntity.setH(h);
+		return rectEntity;
 	}
 	
 }

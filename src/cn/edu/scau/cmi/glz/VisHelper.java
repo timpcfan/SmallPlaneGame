@@ -2,12 +2,11 @@ package cn.edu.scau.cmi.glz;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Shape;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 
@@ -40,45 +39,47 @@ public class VisHelper {
     public static final Color Black = new Color(0x000000);
     public static final Color White = new Color(0xFFFFFF);
     
-    public static final Color Sky = new Color(0x3B2951);
+    public static final Color Sky = new Color(0x3B2951); // 背景颜色
+    
+    public static Font FONT;
+    
+	static {
+		
+		// 初始化字体
+    	try {
+    		File fontFile = new File("resources/Monaco.ttf");
+			FONT = Font.createFont(Font.TRUETYPE_FONT, fontFile);
+		} catch (Exception e) {
+			System.out.println("WARNNING: Failed to load font file");
+			FONT = new Font("Serif", Font.PLAIN, 1);
+		}
+		
+	}
     
     
     
-    // 绘制图形
-    public static void drawShape(Graphics2D g, int x, int y, Shape shape, boolean isFilled) {
-    	
-    	if(isFilled) g.fill(shape);
-    	else g.draw(shape);
+    // 绘制图形实例
+    public static void drawShapeEntity(Graphics2D g, ShapeEntity shapeEntity) {
+    	setColor(g, shapeEntity.getColor());
+    	if(shapeEntity.isFilled()) g.fill(shapeEntity.getShape());
+    	else g.draw(shapeEntity.getShape());
     }
     
-    // 绘制空心圆
-    public static void strokeCircle(Graphics2D g, int x, int y, int r){
-
-        Ellipse2D circle = new Ellipse2D.Double(x-r, y-r, 2*r, 2*r);
-        g.draw(circle);
+    // 绘制图形实例
+    public static void drawImageEntity(Graphics2D g, ImageEntity imageEntity) {
+    	g.drawImage(imageEntity.getImage(), imageEntity.getX(), imageEntity.getY(), null);
     }
-
-    // 绘制实心圆
-    public static void fillCircle(Graphics2D g, int x, int y, int r){
-
-        Ellipse2D circle = new Ellipse2D.Double(x-r, y-r, 2*r, 2*r);
-        g.fill(circle);
+    
+    // 绘制文字实例
+    public static void drawTextEntity(Graphics2D g, TextEntity textEntity) {
+    	setColor(g, textEntity.getColor());
+        g.setFont(FONT.deriveFont(textEntity.getFontSize()));
+        FontMetrics metrics = g.getFontMetrics();
+        int w = metrics.stringWidth(textEntity.getText());
+        int h = metrics.getDescent();
+        g.drawString(textEntity.getText(), textEntity.getCenterX() - w/2, textEntity.getCenterY() - h/2);
     }
-
-    // 绘制空心矩形
-    public static void strokeRectangle(Graphics2D g, int x, int y, int w, int h){
-
-        Rectangle2D rectangle = new Rectangle2D.Double(x, y, w, h);
-        g.draw(rectangle);
-    }
-
-    // 绘制实心矩形
-    public static void fillRectangle(Graphics2D g, int x, int y, int w, int h){
-
-        Rectangle2D rectangle = new Rectangle2D.Double(x, y, w, h);
-        g.fill(rectangle);
-    }
-
+    
     // 设置画笔颜色
     public static void setColor(Graphics2D g, Color color){
         g.setColor(color);
@@ -99,6 +100,7 @@ public class VisHelper {
             System.out.println("Error sleeping");
         }
     }
+    
 
     // 绘制图像
     public static void putImage(Graphics2D g, int x, int y, String imageURL){

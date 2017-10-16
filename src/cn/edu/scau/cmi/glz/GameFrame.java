@@ -81,23 +81,23 @@ public class GameFrame extends JFrame{
             
 			
             // 具体绘制
-            // TODO 具体绘制内容
             if(model != null) {
             	
             	// 玩家实体的绘制
-	            VisHelper.putImage(g2d, model.getPlayer().getX(), model.getPlayer().getY(), model.getPlayer().getImage());
+            	if(model.getPlayer() != null)
+            		VisHelper.drawImageEntity(g2d, model.getPlayer());
 	            
 	            // 图形实体的绘制
 	            for(ImageEntity entity: model.getImageEntitesCopy())
-	            	VisHelper.putImage(g2d, entity.getX(), entity.getY(), entity.getImage());
+	            	VisHelper.drawImageEntity(g2d, entity);
 	           
 	            // 形状实体的绘制
 	            for(ShapeEntity shape: model.getShapesCopy())
-	            	VisHelper.drawShape(g2d, shape.getX(), shape.getY(), shape.getShape(), shape.isFilled());
+	            	VisHelper.drawShapeEntity(g2d, shape);
 	            
 	            // 文字实体的绘制
-	            for(TextEntity entity: model.getTextsCopy())
-	            	VisHelper.drawText(g2d, entity.getText(), entity.getCenterX(), entity.getCenterY());
+	            for(TextEntity text: model.getTextsCopy())
+	            	VisHelper.drawTextEntity(g2d, text);
 	            
             }
 		}
