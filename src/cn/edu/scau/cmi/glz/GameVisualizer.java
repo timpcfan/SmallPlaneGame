@@ -46,6 +46,10 @@ public class GameVisualizer {
 				bulletTask();
 			}).start();
 
+			// 垃圾处理线程
+			new Thread(() -> {
+				gcTask();
+			}).start();
 		});
 	}
 
@@ -143,13 +147,16 @@ public class GameVisualizer {
 				double d = 400 * passedSeconds; // 玩家此帧的位移
 				double px = model.getPlayer().getX();
 				double py = model.getPlayer().getY();
-				if(keys[0]) px -= d;
-				if(keys[1]) px += d;
-				if(keys[2]) py -= d;
-				if(keys[3]) py += d;
+				if (keys[0])
+					px -= d;
+				if (keys[1])
+					px += d;
+				if (keys[2])
+					py -= d;
+				if (keys[3])
+					py += d;
 				model.getPlayer().setX(Math.max(0, Math.min(frame.getCanvasWidth() - model.getPlayer().getW(), px)));
 				model.getPlayer().setY(Math.max(0, Math.min(frame.getCanvasHeight() - model.getPlayer().getH(), py)));
-				
 
 				// 检测玩家与敌人碰撞
 				for (Enemy enemy : model.getEnemiesCopy()) {
@@ -160,24 +167,23 @@ public class GameVisualizer {
 					}
 				}
 
-				// 检测玩家与子弹碰撞
+				// 检测敌人与子弹碰撞
 				for (Bullet bullet : model.getBulletsCopy()) {
 					for (Enemy enemy : model.getEnemiesCopy()) {
 						if (bullet.collideWith(enemy, 0.85)) {
-							model.deleteEnemy(enemy);
+							enemy.beShot();
 							model.deleteBullet(bullet);
 							break;
 						}
 					}
 				}
-				
-				
+
 				// 玩家死亡检测
 				if (!model.getPlayer().hasLife()) {
 					model = ViewBuilder.buildGameoverView(frame);
 					isRunning = false;
 				}
-				
+
 			} // end if GAMING
 
 			if (model.getViewType() == ViewType.MAIN) {
@@ -207,7 +213,11 @@ public class GameVisualizer {
 			VisHelper.pause(10);
 			if (isRunning) {
 
-				Enemy enemy = new Stone1();
+				Enemy enemy;
+				if (Math.random() > 0.5)
+					enemy = new Stone1();
+				else
+					enemy = new Stone2();
 
 				int x = (int) (Math.random() * (frame.getCanvasWidth() - enemy.getW()));
 				int y = -(int) enemy.getH();
@@ -251,6 +261,25 @@ public class GameVisualizer {
 	}
 
 	/**
+	 * 垃圾回收任务
+	 */
+	private void gcTask() {
+		while (true) {
+			VisHelper.pause(10);
+			
+			// 删除死亡和出界的敌人
+			for(Enemy enemy: model.getEnemiesCopy())
+				if (enemy.isDead() || enemy.isOutOfFrame(frame))
+					model.deleteEnemy(enemy);
+
+			// 删除出界的子弹
+			for(Bullet bullet: model.getBulletsCopy())
+				if(bullet.isOutOfFrame(frame))
+					model.deleteBullet(bullet);
+		}
+	}
+
+	/**
 	 * 程序入口
 	 */
 	public static void main(String[] args) {
@@ -260,4 +289,3 @@ public class GameVisualizer {
 	}
 
 }
-
