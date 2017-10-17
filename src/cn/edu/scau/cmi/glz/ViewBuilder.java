@@ -110,14 +110,12 @@ public class ViewBuilder {
 	public static GameModel buildGamingView(GameFrame frame) {
 		GameModel model = new GameModel();
 		model.setViewType(ViewType.GAMING);
-		model.addImageToTopLevel(new ImageEntity(10, 10, "resources/heart.png"));
 
 		// TODO Move away from here
 		PlayerPlane player = new PlayerPlane(0, 0, 300);
 		player.setCenterX(frame.getCanvasWidth() / 2);
 		player.setCenterY(frame.getCanvasHeight() * 3 / 4);
 		model.setPlayer(player);
-		
 		
 		return model;
 	}

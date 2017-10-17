@@ -103,10 +103,6 @@ public class GameFrame extends JFrame{
 	            for(TextEntity text: model.getTextsCopy())
 	            	VisHelper.drawTextEntity(g2d, text);
 	            
-	            // 顶层图像绘制
-	            for(ImageEntity image: model.getTopLevelImagesCopy())
-	            	VisHelper.drawImageEntity(g2d, image);
-	            
 	            // GUI绘制
 	            if(model.getViewType() == ViewType.GAMING) {
 	            	VisHelper.drawImageEntity(g2d, guiHeart);

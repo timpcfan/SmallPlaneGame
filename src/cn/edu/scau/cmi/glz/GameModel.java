@@ -9,7 +9,6 @@ import java.util.ArrayList;
  */
 public class GameModel {
 	
-	private ArrayList<ImageEntity> topLevelImages;
 	private ArrayList<ImageEntity> imageEntities;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Bullet> bullets;
@@ -20,7 +19,6 @@ public class GameModel {
 	
 	
 	public GameModel() {
-		topLevelImages = new ArrayList<>();
 		imageEntities = new ArrayList<>();
 		enemies = new ArrayList<>();
 		bullets = new ArrayList<>();
@@ -83,15 +81,6 @@ public class GameModel {
 		return (ArrayList<ShapeEntity>) shapes.clone();
 	}
 	
-	public ArrayList<ImageEntity> getTopLevelImages() {
-		return topLevelImages;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public ArrayList<ImageEntity> getTopLevelImagesCopy(){
-		return (ArrayList<ImageEntity>) topLevelImages.clone();
-	}
-	
 	public void setPlayer(PlayerPlane player) {
 		this.player = player;
 	}
@@ -142,14 +131,6 @@ public class GameModel {
 	
 	public void deleteShape(ShapeEntity shapeEntity) {
 		shapes.remove(shapeEntity);
-	}
-	
-	public void addImageToTopLevel(ImageEntity imageEntity) {
-		topLevelImages.add(imageEntity);
-	}
-	
-	public void deleteImageFromTopLevel(ImageEntity imageEntity) {
-		topLevelImages.remove(imageEntity);
 	}
 	
 	public void clearAll() {
