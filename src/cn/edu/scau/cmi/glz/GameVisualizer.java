@@ -239,8 +239,8 @@ public class GameVisualizer {
 				if (keys[4]) {
 					Bullet bullet = new Bullet();
 					bullet.setCenterX(model.getPlayer().getCenterX());
-					bullet.setY(model.getPlayer().getY() - bullet.getH());
-					bullet.setBulletSpeed(500);
+					bullet.setY(model.getPlayer().getY());
+					bullet.setBulletSpeed(700);
 					model.addBullet(bullet);
 
 					VisHelper.pause(model.getPlayer().getFireDelay());
