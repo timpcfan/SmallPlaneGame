@@ -2,28 +2,42 @@ package cn.edu.scau.cmi.glz;
 
 import java.util.ArrayList;
 
+
+
 /**
  * GameModel类用于储存游戏数据（Model）
  */
 public class GameModel {
 	
+	private ArrayList<ImageEntity> topLevelImages;
 	private ArrayList<ImageEntity> imageEntities;
 	private ArrayList<Enemy> enemies;
 	private ArrayList<Bullet> bullets;
 	private ArrayList<TextEntity> texts;
 	private ArrayList<ShapeEntity> shapes;
 	private PlayerPlane player;
+	private ViewType viewType;
 	
 	
 	public GameModel() {
+		topLevelImages = new ArrayList<>();
 		imageEntities = new ArrayList<>();
 		enemies = new ArrayList<>();
 		bullets = new ArrayList<>();
 		texts = new ArrayList<>();
 		shapes = new ArrayList<>();
+		viewType = null;
 		player = null;
 	}
 	
+	public ViewType getViewType() {
+		return viewType;
+	}
+
+	public void setViewType(ViewType viewType) {
+		this.viewType = viewType;
+	}
+
 	public ArrayList<ImageEntity> getImageEntites() {
 		return imageEntities;
 	}
@@ -67,6 +81,15 @@ public class GameModel {
 	@SuppressWarnings("unchecked")
 	public ArrayList<ShapeEntity> getShapesCopy(){
 		return (ArrayList<ShapeEntity>) shapes.clone();
+	}
+	
+	public ArrayList<ImageEntity> getTopLevelImages() {
+		return topLevelImages;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public ArrayList<ImageEntity> getTopLevelImagesCopy(){
+		return (ArrayList<ImageEntity>) topLevelImages.clone();
 	}
 	
 	public void setPlayer(PlayerPlane player) {
@@ -121,6 +144,14 @@ public class GameModel {
 		shapes.remove(shapeEntity);
 	}
 	
+	public void addImageToTopLevel(ImageEntity imageEntity) {
+		topLevelImages.add(imageEntity);
+	}
+	
+	public void deleteImageFromTopLevel(ImageEntity imageEntity) {
+		topLevelImages.remove(imageEntity);
+	}
+	
 	public void clearAll() {
 		imageEntities.clear();
 		enemies.clear();
@@ -130,5 +161,9 @@ public class GameModel {
 		player = null;
 	}
 
+}
+
+enum ViewType {
+	MAIN, GAMING, GAMEOVER
 }
 

@@ -163,6 +163,8 @@ class PlayerPlane extends ImageEntity{
 	public PlayerPlane(double x, double y, int fireDelay) {
 		super(x, y, "resources/plane.png");
 		this.fireDelay = fireDelay;
+		this.life = 3;
+		this.bullet = 0;
 	}
 	
 	public int getFireDelay() {

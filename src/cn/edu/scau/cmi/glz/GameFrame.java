@@ -19,6 +19,9 @@ public class GameFrame extends JFrame{
 	private int canvasWidth;
 	private int canvasHeight;
 	
+	// GUI绘制素材
+	private static final ImageEntity guiHeart = new ImageEntity(10, 10, "resources/heart.png");
+	
 	public GameFrame(String title, int canvasWidth, int canvasHeight) {
 		super(title);
 		
@@ -31,6 +34,7 @@ public class GameFrame extends JFrame{
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
+		
 	}
 	
 	
@@ -98,6 +102,19 @@ public class GameFrame extends JFrame{
 	            // 文字实体的绘制
 	            for(TextEntity text: model.getTextsCopy())
 	            	VisHelper.drawTextEntity(g2d, text);
+	            
+	            // 顶层图像绘制
+	            for(ImageEntity image: model.getTopLevelImagesCopy())
+	            	VisHelper.drawImageEntity(g2d, image);
+	            
+	            // GUI绘制
+	            if(model.getViewType() == ViewType.GAMING) {
+	            	VisHelper.drawImageEntity(g2d, guiHeart);
+	            	VisHelper.drawTextEntity(g2d, TextEntity.buildTextEntity(
+	            			Integer.toString(model.getPlayer().getLife()),
+	            			56, 83, 64, VisHelper.Red));
+	            }
+	            
 	            
             }
 		}
