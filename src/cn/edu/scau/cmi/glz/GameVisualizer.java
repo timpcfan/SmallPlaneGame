@@ -139,16 +139,17 @@ public class GameVisualizer {
 
 			if (model.getViewType() == ViewType.GAMING) {
 
-				// 玩家移动 TODO 优化玩家移动代码实现
+				// 玩家移动
 				double d = 400 * passedSeconds; // 玩家此帧的位移
-				if (keys[0] && model.getPlayer().getX() >= 0)
-					model.getPlayer().setX(model.getPlayer().getX() - d);
-				if (keys[1] && (model.getPlayer().getX() + model.getPlayer().getW()) <= frame.getCanvasWidth())
-					model.getPlayer().setX(model.getPlayer().getX() + d);
-				if (keys[2] && model.getPlayer().getY() >= 0)
-					model.getPlayer().setY(model.getPlayer().getY() - d);
-				if (keys[3] && (model.getPlayer().getY() + model.getPlayer().getH() <= frame.getCanvasHeight()))
-					model.getPlayer().setY(model.getPlayer().getY() + d);
+				double px = model.getPlayer().getX();
+				double py = model.getPlayer().getY();
+				if(keys[0]) px -= d;
+				if(keys[1]) px += d;
+				if(keys[2]) py -= d;
+				if(keys[3]) py += d;
+				model.getPlayer().setX(Math.max(0, Math.min(frame.getCanvasWidth() - model.getPlayer().getW(), px)));
+				model.getPlayer().setY(Math.max(0, Math.min(frame.getCanvasHeight() - model.getPlayer().getH(), py)));
+				
 
 				// 检测玩家与敌人碰撞
 				for (Enemy enemy : model.getEnemiesCopy()) {
