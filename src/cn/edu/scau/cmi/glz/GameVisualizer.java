@@ -135,8 +135,12 @@ public class GameVisualizer {
 			
 			
 			if(currentView == ViewType.GAMING) {
+				
+				
+				
+				
 				// 玩家移动
-				int d = 7;
+				double d = 400 * passedSeconds; // 玩家此帧的位移
 				if (keys[0] && model.getPlayer().getX() >= 0)
 					model.getPlayer().setX(model.getPlayer().getX() - d);
 				if (keys[1] && (model.getPlayer().getX() + model.getPlayer().getW()) <= frame.getCanvasWidth())
