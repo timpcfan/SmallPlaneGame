@@ -46,16 +46,16 @@ public class GameEntity {
 		this.vy = 0;
 	}
 	
-	public int getX() {
-		return (int)x;
+	public double getX() {
+		return x;
 	}
 
 	public void setX(double x) {
 		this.x = x;
 	}
 
-	public int getY() {
-		return (int)y;
+	public double getY() {
+		return y;
 	}
 
 	public void setY(double y) {
@@ -70,12 +70,12 @@ public class GameEntity {
 		y = centerY - h / 2;
 	}
 	
-	public int getCenterX() {
-		return (int) (x + w / 2);
+	public double getCenterX() {
+		return x + w / 2;
 	}
 	
-	public int getCenterY() {
-		return (int) (y + h / 2);
+	public double getCenterY() {
+		return y + h / 2;
 	}
 	
 	public double getW() {
@@ -163,6 +163,8 @@ class PlayerPlane extends ImageEntity{
 	public PlayerPlane(double x, double y, int fireDelay) {
 		super(x, y, "resources/plane.png");
 		this.fireDelay = fireDelay;
+		this.life = 3;
+		this.bullet = 0;
 	}
 	
 	public int getFireDelay() {
@@ -319,11 +321,11 @@ class TextEntity extends GameEntity{
 		setY(y);
 	}
 	
-	public int getCenterX() {
+	public double getCenterX() {
 		return getX();
 	}
 	
-	public int getCenterY() {
+	public double getCenterY() {
 		return getY();
 	}
 

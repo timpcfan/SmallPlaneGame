@@ -8,7 +8,8 @@ public class ViewBuilder {
 	 */
 	public static GameModel buildMainView(GameFrame frame) {
 		GameModel model = new GameModel();
-		// TODO 向model中添加实体构成主界面
+		model.setViewType(ViewType.MAIN);
+		
 		TextEntity text1 = TextEntity.buildTextEntity("Play", 30,
 				frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2,
 				VisHelper.DeepOrange);
@@ -43,7 +44,7 @@ public class ViewBuilder {
 	 */
 	public static GameModel buildGameoverView(GameFrame frame) {
 		GameModel model = new GameModel();
-		// TODO 向model中添加实体构成游戏结束界面
+		model.setViewType(ViewType.GAMEOVER);
 		
 		//添加文字
 		int buttonInterval = 50;
@@ -108,10 +109,14 @@ public class ViewBuilder {
 	
 	public static GameModel buildGamingView(GameFrame frame) {
 		GameModel model = new GameModel();
+		model.setViewType(ViewType.GAMING);
+
+		// TODO Move away from here
 		PlayerPlane player = new PlayerPlane(0, 0, 300);
 		player.setCenterX(frame.getCanvasWidth() / 2);
 		player.setCenterY(frame.getCanvasHeight() * 3 / 4);
 		model.setPlayer(player);
+		
 		return model;
 	}
 	

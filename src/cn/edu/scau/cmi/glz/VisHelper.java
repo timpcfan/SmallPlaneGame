@@ -67,7 +67,7 @@ public class VisHelper {
     
     // 绘制图形实例
     public static void drawImageEntity(Graphics2D g, ImageEntity imageEntity) {
-    	g.drawImage(imageEntity.getImage(), imageEntity.getX(), imageEntity.getY(), null);
+    	g.drawImage(imageEntity.getImage(), (int)imageEntity.getX(), (int)imageEntity.getY(), null);
     }
     
     // 绘制文字实例
@@ -77,7 +77,7 @@ public class VisHelper {
         FontMetrics metrics = g.getFontMetrics();
         int w = metrics.stringWidth(textEntity.getText());
         int h = metrics.getDescent();
-        g.drawString(textEntity.getText(), textEntity.getCenterX() - w/2, textEntity.getCenterY() - h/2);
+        g.drawString(textEntity.getText(), (int)(textEntity.getCenterX() - w/2), (int)(textEntity.getCenterY() - h/2));
     }
     
     // 设置画笔颜色
