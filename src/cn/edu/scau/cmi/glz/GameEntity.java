@@ -213,6 +213,7 @@ class PlayerPlane extends ImageEntity {
 class Enemy extends ImageEntity {
 
 	private int life = 1;
+	private int score = 100;
 
 	public Enemy() {
 		super();
@@ -246,6 +247,14 @@ class Enemy extends ImageEntity {
 		setLife(0);
 	}
 	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	@Override
 	public boolean isDead() {
 		return life == 0;
@@ -266,6 +275,7 @@ class Stone1 extends Enemy {
 	public Stone1(int x, int y) {
 		super(x, y, VisHelper.Stone1);
 		setLife(4);
+		setScore(300);
 	}
 	
 	@Override
@@ -293,6 +303,7 @@ class Stone2 extends Enemy {
 	public Stone2(int x, int y) {
 		super(x, y, VisHelper.Stone2);
 		setLife(2);
+		setScore(100);
 	}
 	
 	@Override

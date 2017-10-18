@@ -168,6 +168,7 @@ public class GameVisualizer {
 					for (Enemy enemy : model.getEnemiesCopy()) {
 						if (bullet.collideWith(enemy, 0.85)) {
 							enemy.beShot();
+							if(enemy.isDead()) model.addScore(enemy.getScore());
 							model.deleteBullet(bullet);
 							break;
 						}
@@ -210,7 +211,7 @@ public class GameVisualizer {
 			if (isRunning) {
 
 				Enemy enemy;
-				if (Math.random() > 0.5)
+				if (Math.random() > 0.8)
 					enemy = new Stone1();
 				else
 					enemy = new Stone2();

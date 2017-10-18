@@ -113,6 +113,15 @@ public class VisHelper {
         g.drawString(textEntity.getText(), (int)(textEntity.getCenterX() - w/2), (int)(textEntity.getCenterY() - h/2));
     }
     
+    public static void drawTextEntityUsePosAsTopLeft(Graphics2D g, TextEntity textEntity) {
+    	setColor(g, textEntity.getColor());
+        g.setFont(FONT.deriveFont(textEntity.getFontSize()));
+        FontMetrics metrics = g.getFontMetrics();
+        int w = metrics.stringWidth(textEntity.getText());
+        int h = metrics.getDescent();
+        g.drawString(textEntity.getText(), (int) textEntity.getX(), (int) textEntity.getY());
+    }
+    
     // 设置画笔颜色
     public static void setColor(Graphics2D g, Color color){
         g.setColor(color);

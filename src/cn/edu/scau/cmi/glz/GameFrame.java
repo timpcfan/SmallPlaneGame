@@ -20,7 +20,7 @@ public class GameFrame extends JFrame{
 	private int canvasHeight;
 	
 	// GUI绘制素材
-	private static final ImageEntity guiHeart = new ImageEntity(10, 10, "resources/heart.png");
+	private static final ImageEntity guiHeart = new ImageEntity(10, 74, VisHelper.Heart);
 	
 	public GameFrame(String title, int canvasWidth, int canvasHeight) {
 		super(title);
@@ -106,9 +106,12 @@ public class GameFrame extends JFrame{
 	            // GUI绘制
 	            if(model.getViewType() == ViewType.GAMING) {
 	            	VisHelper.drawImageEntity(g2d, guiHeart);
-	            	VisHelper.drawTextEntity(g2d, TextEntity.buildTextEntity(
+	            	VisHelper.drawTextEntityUsePosAsTopLeft(g2d, TextEntity.buildTextEntity(
 	            			Integer.toString(model.getPlayer().getLife()),
-	            			56, 83, 64, VisHelper.Red));
+	            			56, 64, 120, VisHelper.Red));
+	            	VisHelper.drawTextEntityUsePosAsTopLeft(g2d, TextEntity.buildTextEntity(
+	            			Integer.toString(model.getScore()),
+	            			56, 10, 56, VisHelper.Yellow));
 	            }
 	            
 	            

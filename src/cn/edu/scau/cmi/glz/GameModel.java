@@ -16,6 +16,7 @@ public class GameModel {
 	private ArrayList<ShapeEntity> shapes;
 	private PlayerPlane player;
 	private ViewType viewType;
+	private int score;
 	
 	
 	public GameModel() {
@@ -26,6 +27,7 @@ public class GameModel {
 		shapes = new ArrayList<>();
 		viewType = null;
 		player = null;
+		score = 0;
 	}
 	
 	public ViewType getViewType() {
@@ -34,6 +36,18 @@ public class GameModel {
 
 	public void setViewType(ViewType viewType) {
 		this.viewType = viewType;
+	}
+	
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+	public void addScore(int score) {
+		this.score += score;
 	}
 
 	public ArrayList<ImageEntity> getImageEntites() {
