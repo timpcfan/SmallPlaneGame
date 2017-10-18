@@ -147,21 +147,17 @@ public class GameVisualizer {
 				double d = 400 * passedSeconds; // 玩家此帧的位移
 				double px = model.getPlayer().getX();
 				double py = model.getPlayer().getY();
-				if (keys[0])
-					px -= d;
-				if (keys[1])
-					px += d;
-				if (keys[2])
-					py -= d;
-				if (keys[3])
-					py += d;
+				if (keys[0]) px -= d;
+				if (keys[1]) px += d;
+				if (keys[2]) py -= d;
+				if (keys[3]) py += d;
 				model.getPlayer().setX(Math.max(0, Math.min(frame.getCanvasWidth() - model.getPlayer().getW(), px)));
 				model.getPlayer().setY(Math.max(0, Math.min(frame.getCanvasHeight() - model.getPlayer().getH(), py)));
 
 				// 检测玩家与敌人碰撞
 				for (Enemy enemy : model.getEnemiesCopy()) {
 					if (enemy.collideWith(model.getPlayer(), 0.85)) {
-						model.deleteEnemy(enemy);
+						enemy.crash();
 						model.getPlayer().crash();
 						break;
 					}

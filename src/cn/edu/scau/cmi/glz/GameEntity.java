@@ -242,6 +242,10 @@ class Enemy extends ImageEntity {
 		life--;
 	}
 	
+	public void crash() {
+		setLife(0);
+	}
+	
 	@Override
 	public boolean isDead() {
 		return life == 0;
@@ -261,7 +265,22 @@ class Stone1 extends Enemy {
 
 	public Stone1(int x, int y) {
 		super(x, y, VisHelper.Stone1);
-		setLife(3);
+		setLife(4);
+	}
+	
+	@Override
+	public void beShot() {
+		super.beShot();
+		if(getLife() == 3) setImage(VisHelper.Stone1_1);
+		else if(getLife() == 2) setImage(VisHelper.Stone1_2);
+		else if(getLife() == 1) setImage(VisHelper.Stone1_3);
+		else if(getLife() == 0) setImage(VisHelper.Stone1_broken);
+	}
+	
+	@Override
+	public void crash() {
+		super.crash();
+		setImage(VisHelper.Stone1_broken);
 	}
 }
 
@@ -274,6 +293,19 @@ class Stone2 extends Enemy {
 	public Stone2(int x, int y) {
 		super(x, y, VisHelper.Stone2);
 		setLife(2);
+	}
+	
+	@Override
+	public void beShot() {
+		super.beShot();
+		if(getLife() == 1) setImage(VisHelper.Stone2_1);
+		else if(getLife() == 0) setImage(VisHelper.Stone2_broken);
+	}
+	
+	@Override
+	public void crash() {
+		super.crash();
+		setImage(VisHelper.Stone2_broken);
 	}
 }
 
