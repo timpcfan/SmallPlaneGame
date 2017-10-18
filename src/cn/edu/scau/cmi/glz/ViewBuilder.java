@@ -29,10 +29,10 @@ public class ViewBuilder {
 		ShapeEntity ellipse2 = ShapeEntity.buildEllipseEntity(150, 450, 200, 110, VisHelper.Teal, true);
 		model.addShape(ellipse2);
 // 添加图片
-        model.addImage(new ImageEntity(300, 100, "resources/stone1.png"));
-        model.addImage(new ImageEntity(20, 600, "resources/ufo.png"));
-        model.addImage(new ImageEntity(20, 600, "resources/bullet.png"));
-        model.addImage(new ImageEntity(230, 600, "resources/bullet.png"));
+        model.addImage(new ImageEntity(300, 100, VisHelper.Stone1));
+        model.addImage(new ImageEntity(20, 600, VisHelper.UFO));
+        model.addImage(new ImageEntity(20, 600, VisHelper.Bullet));
+        model.addImage(new ImageEntity(230, 600, VisHelper.Bullet));
 
 		
 	return model;
@@ -101,7 +101,7 @@ public class ViewBuilder {
 		model.addShape(ellipse);
 		
 		// 添加图片
-		model.addImage(new ImageEntity(20, 600, "resources/ufo.png"));
+		model.addImage(new ImageEntity(20, 600, VisHelper.UFO));
 
 		
 		return model;
@@ -125,7 +125,7 @@ public class ViewBuilder {
 	 */
 	public static void main(String[] args) {
 		
-		GameFrame frame = new GameFrame("游戏开始界面", 500, 800);
+		GameFrame frame = new GameFrame("测试用界面", 500, 800);
 		GameModel model = buildMainView(frame); // 这里将model赋值成需要测试的界面数据模型Model
 		frame.render(model);
 	}

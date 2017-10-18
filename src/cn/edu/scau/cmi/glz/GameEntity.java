@@ -6,11 +6,8 @@ import java.awt.Point;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
-import java.time.Year;
-
 import javax.swing.ImageIcon;
 
-import sun.net.www.content.audio.x_aiff;
 
 /**
  * GameEntite是所有游戏实体的基类
@@ -165,7 +162,7 @@ class PlayerPlane extends ImageEntity {
 	private int fireDelay;
 
 	public PlayerPlane(double x, double y, int fireDelay) {
-		super(x, y, "resources/plane.png");
+		super(x, y, VisHelper.Plane);
 		this.fireDelay = fireDelay;
 		this.life = 3;
 		this.bullet = 0;
@@ -263,7 +260,7 @@ class Stone1 extends Enemy {
 	}
 
 	public Stone1(int x, int y) {
-		super(x, y, "resources/stone1.png");
+		super(x, y, VisHelper.Stone1);
 		setLife(3);
 	}
 }
@@ -275,7 +272,7 @@ class Stone2 extends Enemy {
 	}
 
 	public Stone2(int x, int y) {
-		super(x, y, "resources/stone2.png");
+		super(x, y, VisHelper.Stone2);
 		setLife(2);
 	}
 }
@@ -283,11 +280,11 @@ class Stone2 extends Enemy {
 class Bullet extends ImageEntity {
 
 	public Bullet() {
-		super(0, 0, "resources/bullet.png");
+		super(0, 0, VisHelper.Bullet);
 	}
 
 	public Bullet(double x, double y, double speed) {
-		super(x, y, "resources/bullet.png");
+		super(x, y, VisHelper.Bullet);
 		setBulletSpeed(speed);
 	}
 

@@ -41,9 +41,42 @@ public class VisHelper {
     
     public static final Color Sky = new Color(0x3B2951); // 背景颜色
     
+    // 图像对象
+    public static final Image Bullet;
+    public static final Image BulletPacket;
+    public static final Image Heart;
+    public static final Image Plane;
+    public static final Image Stone1;
+    public static final Image Stone1_1;
+    public static final Image Stone1_2;
+    public static final Image Stone1_3;
+    public static final Image Stone1_broken;
+    public static final Image Stone2;
+    public static final Image Stone2_1;
+    public static final Image Stone2_2;
+    public static final Image Stone2_broken;
+    public static final Image UFO;
+    
+    // 字体
     public static Font FONT;
     
 	static {
+		
+		// 初始化图像对象
+		Bullet = loadImage("resources/bullet.png");
+		BulletPacket = loadImage("resources/bulletpacket.png");
+		Heart = loadImage("resources/heart.png");
+		Plane = loadImage("resources/plane.png");
+		Stone1 = loadImage("resources/stone1.png");
+		Stone1_1 = loadImage("resources/stone1_1.png");
+		Stone1_2 = loadImage("resources/stone1_2.png");
+		Stone1_3 = loadImage("resources/stone1_3.png");
+		Stone1_broken = loadImage("resources/stone1_broken.png");
+		Stone2 = loadImage("resources/stone2.png");
+		Stone2_1 = loadImage("resources/stone2_1.png");
+		Stone2_2 = loadImage("resources/stone2_2.png");
+		Stone2_broken = loadImage("resources/stone2_broken.png");
+		UFO = loadImage("resources/ufo.png");
 		
 		// 初始化字体
     	try {
@@ -125,5 +158,9 @@ public class VisHelper {
         int w = metrics.stringWidth(text);
         int h = metrics.getDescent();
         g.drawString(text, centerx - w/2, centery + h);
+    }
+    
+    public static Image loadImage(String imageURL) {
+    	return new ImageIcon(imageURL).getImage();
     }
 }
