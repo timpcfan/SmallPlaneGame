@@ -116,9 +116,7 @@ public class VisHelper {
     public static void drawTextEntityUsePosAsTopLeft(Graphics2D g, TextEntity textEntity) {
     	setColor(g, textEntity.getColor());
         g.setFont(FONT.deriveFont(textEntity.getFontSize()));
-        FontMetrics metrics = g.getFontMetrics();
-        int w = metrics.stringWidth(textEntity.getText());
-        int h = metrics.getDescent();
+
         g.drawString(textEntity.getText(), (int) textEntity.getX(), (int) textEntity.getY());
     }
     
