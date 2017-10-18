@@ -56,6 +56,13 @@ public class VisHelper {
     public static final Image Stone2_2;
     public static final Image Stone2_broken;
     public static final Image UFO;
+    public static final Image MainPage;
+    public static final Image PlayButton;
+    public static final Image PlayButton_big;
+    public static final Image AgainButton;
+    public static final Image MainButton;
+    public static final Image Plane_crashed;
+    public static final Image ImageForCheck;
     
     // 字体
     public static Font FONT;
@@ -77,6 +84,13 @@ public class VisHelper {
 		Stone2_2 = loadImage("resources/stone2_2.png");
 		Stone2_broken = loadImage("resources/stone2_broken.png");
 		UFO = loadImage("resources/ufo.png");
+		MainPage = loadImage("resources/mainpage.png");
+		PlayButton = loadImage("resources/playbutton.png");
+		PlayButton_big = loadImage("resources/playbutton_big.png");
+		AgainButton = loadImage("resources/againbutton.png");
+		MainButton = loadImage("resources/mainbutton.png");
+		Plane_crashed = loadImage("resources/plane_crashed.png");
+		ImageForCheck = loadImage("resources/againforcheck.png");
 		
 		// 初始化字体
     	try {
@@ -169,5 +183,10 @@ public class VisHelper {
     
     public static Image loadImage(String imageURL) {
     	return new ImageIcon(imageURL).getImage();
+    }
+    
+    public static boolean isPointInImage(int px, int py, Image image, int imageX, int imageY) {
+    	return px >= imageX && px <= imageX + image.getWidth(null) &&
+    			py >= imageY && py <= imageY + image.getHeight(null);
     }
 }

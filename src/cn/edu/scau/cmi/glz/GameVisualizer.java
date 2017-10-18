@@ -5,6 +5,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayDeque;
+import java.util.Queue;
 
 /**
  * GameVisualizer类是控制器（Controller） 处理用户的输入，管理和连接模型和视图
@@ -16,7 +18,8 @@ public class GameVisualizer {
 
 	public static final int DEFAULT_FPS = 60; // 控制动画帧率
 
-	private boolean[] keys = new boolean[5];
+	private boolean[] keys = new boolean[5]; // 储存 a d w s space 的按键状态
+	private Queue<MouseEvent> mouseEvents = new ArrayDeque<>(); // 储存当前鼠标坐标 x, y
 	private int enemySpawnInterval = 1000;
 	private boolean isRunning;
 
@@ -94,13 +97,9 @@ public class GameVisualizer {
 	private class GameMouseListener extends MouseAdapter {
 		@Override
 		public void mouseClicked(MouseEvent e) {
-
+			mouseEvents.add(e); // 将鼠标事件添加进鼠标事件队列
 		}
 
-		@Override
-		public void mouseMoved(MouseEvent e) {
-
-		}
 	}
 
 	/**
@@ -177,24 +176,34 @@ public class GameVisualizer {
 
 				// 玩家死亡检测
 				if (!model.getPlayer().hasLife()) {
-					model = ViewBuilder.buildGameoverView(frame);
+					model = ViewBuilder.buildGameoverView(frame, model.getScore());
 					isRunning = false;
 				}
 
 			} // end if GAMING
 
 			if (model.getViewType() == ViewType.MAIN) {
-				if (keys[4]) {
+				
+				MouseEvent event = mouseEvents.poll();
+				if (event != null && VisHelper.isPointInImage(event.getX(), event.getY(), VisHelper.PlayButton, 255, 666)) {
 					model = ViewBuilder.buildGamingView(frame);
-					isRunning = true;
+					isRunning = true;				
 				}
 
 			} // end if MAIN
 
+			
 			if (model.getViewType() == ViewType.GAMEOVER) {
-				if (keys[4]) {
+
+				MouseEvent event = mouseEvents.poll();
+				if(event != null && VisHelper.isPointInImage(event.getX(), event.getY(), VisHelper.ImageForCheck, 178, 586)) {
 					model = ViewBuilder.buildGamingView(frame);
 					isRunning = true;
+				}else if(event != null && VisHelper.isPointInImage(event.getX(), event.getY(), VisHelper.ImageForCheck, 178, 650)) {
+					model = ViewBuilder.buildMainView(frame);
+					isRunning = false;
+				}else if(event != null && VisHelper.isPointInImage(event.getX(), event.getY(), VisHelper.ImageForCheck, 178, 710)) {
+					System.exit(0);
 				}
 
 			} // end if GAMEOVER

@@ -10,67 +10,41 @@ public class ViewBuilder {
 		GameModel model = new GameModel();
 		model.setViewType(ViewType.MAIN);
 		
-		TextEntity text1 = TextEntity.buildTextEntity("Play", 30,
-				frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2,
-				VisHelper.DeepOrange);
-        model.addText(text1);
-        TextEntity text2 = TextEntity.buildTextEntity("Close", 30,
-        		frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2+125,
-				VisHelper.Sky);
-        model.addText(text2);
-        TextEntity text3 = TextEntity.buildTextEntity("Welcome to Tiny Plane!", 30,
-				frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2-100,
-				VisHelper.Orange);
-        model.addText(text3);
-
-// 添加图形
-        ShapeEntity ellipse1 = ShapeEntity.buildEllipseEntity(150, 325, 200, 110, VisHelper.Teal, true);
-		model.addShape(ellipse1);
-		ShapeEntity ellipse2 = ShapeEntity.buildEllipseEntity(150, 450, 200, 110, VisHelper.Teal, true);
-		model.addShape(ellipse2);
-// 添加图片
-        model.addImage(new ImageEntity(300, 100, VisHelper.Stone1));
-        model.addImage(new ImageEntity(20, 600, VisHelper.UFO));
-        model.addImage(new ImageEntity(20, 600, VisHelper.Bullet));
-        model.addImage(new ImageEntity(230, 600, VisHelper.Bullet));
-
+		model.addImage(new ImageEntity(0, 0, VisHelper.MainPage));
+		model.addImage(new ImageEntity(255, 666, VisHelper.PlayButton));
 		
-	return model;
+		return model;
     }
 	
 	/**
 	 * 生成游戏结束界面的数据模型
 	 * @return 游戏结束界面的数据模型
 	 */
-	public static GameModel buildGameoverView(GameFrame frame) {
+	public static GameModel buildGameoverView(GameFrame frame, int score) {
 		GameModel model = new GameModel();
 		model.setViewType(ViewType.GAMEOVER);
 		
-		//添加文字
-		int buttonInterval = 50;
-		TextEntity title = TextEntity.buildTextEntity("Game Over", 60, 
-										frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2 - 100, 
-										VisHelper.Red);
-		model.addText(title);
-		TextEntity buttonAgain = TextEntity.buildTextEntity("play again", 30, 
-										frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2, 
-										VisHelper.Orange);
-		model.addText(buttonAgain);
-		TextEntity buttonMain = TextEntity.buildTextEntity("Main", 30, 
-										frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2 + buttonInterval * 2, 
-										VisHelper.Yellow);
-		model.addText(buttonMain);
+		model.addText(TextEntity.buildTextEntity("Game Over", 65, 
+						frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 6, VisHelper.Red));
+		model.addText(TextEntity.buildTextEntity("SCORE", 50,
+				frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 3, VisHelper.Yellow));
+		model.addText(TextEntity.buildTextEntity(Integer.toString(score), 40,
+				frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 3 + 50, VisHelper.Yellow));
 		
-		//add shape
-		ShapeEntity playRect = ShapeEntity.buildRectangleEntity(frame.getCanvasWidth() / 2 - 150, frame.getCanvasHeight() / 2 - 45, 
-										300, 60, 
-										VisHelper.Sky, true);
-		model.addShape(playRect);
-		ShapeEntity mainRect = ShapeEntity.buildRectangleEntity(frame.getCanvasWidth() / 2 - 150, frame.getCanvasHeight() / 2 + 55, 
-										300, 60, 
-										VisHelper.Sky, true);
-		model.addShape(mainRect);
+		ImageEntity plane = new ImageEntity(0, 0, VisHelper.Plane_crashed);
+		plane.setCenterX(frame.getCanvasWidth() / 2);
+		plane.setCenterY(frame.getCanvasHeight() / 2 + 40);
+		model.addImage(plane);
 		
+		model.addText(TextEntity.buildTextEntity("AGAIN", 50,
+				frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2 + 200, VisHelper.Cyan));
+		model.addText(TextEntity.buildTextEntity("MAIN", 50,
+				frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2 + 260, VisHelper.Cyan));
+		model.addText(TextEntity.buildTextEntity("EXIT", 50,
+				frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2 + 320, VisHelper.Cyan));
+		
+		
+
 		return model;
 	}
 		
@@ -126,7 +100,7 @@ public class ViewBuilder {
 	public static void main(String[] args) {
 		
 		GameFrame frame = new GameFrame("测试用界面", 500, 800);
-		GameModel model = buildMainView(frame); // 这里将model赋值成需要测试的界面数据模型Model
+		GameModel model = buildGameoverView(frame, 400); // 这里将model赋值成需要测试的界面数据模型Model
 		frame.render(model);
 	}
 
