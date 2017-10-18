@@ -141,6 +141,8 @@ public class GameVisualizer {
 			}
 
 			if (model.getViewType() == ViewType.GAMING) {
+				
+				mouseEvents.clear(); // 清空鼠标事件队列
 
 				// 玩家移动
 				double d = 400 * passedSeconds; // 玩家此帧的位移
