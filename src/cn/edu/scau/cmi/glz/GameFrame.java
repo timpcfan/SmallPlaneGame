@@ -16,8 +16,8 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class GameFrame extends JFrame{
 
-	private int canvasWidth;
-	private int canvasHeight;
+	private int canvasWidth; // 画布宽度
+	private int canvasHeight; // 画布高度
 	
 	// GUI绘制素材
 	private static final ImageEntity guiHeart = new ImageEntity(10, 74, VisHelper.Heart);
@@ -28,7 +28,7 @@ public class GameFrame extends JFrame{
 		this.canvasWidth = canvasWidth;
 		this.canvasHeight = canvasHeight;
 		
-		setContentPane(new GameCanvas());
+		setContentPane(new GameCanvas()); // 将内容面板设置成GameCanvas对象，作为游戏的画布
 		setResizable(false);
 		pack();
 		
@@ -50,7 +50,12 @@ public class GameFrame extends JFrame{
 
 
 
-	private GameModel model;
+	private GameModel model; // 储存游戏数据的引用
+	
+	/**
+	 * 该函数用于将数据导入并绘制到界面上
+	 * @param model 游戏数据Model
+	 */
 	public void render(GameModel model) {
 		this.model = model;
 		repaint();
