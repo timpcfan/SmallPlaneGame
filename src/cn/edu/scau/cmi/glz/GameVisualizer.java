@@ -62,14 +62,14 @@ public class GameVisualizer {
 	private class GameKeyListener extends KeyAdapter {
 		@Override
 		public void keyPressed(KeyEvent e) {
-
-			if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A')
+			
+			if (e.getKeyChar() == 'a' || e.getKeyCode() == 37 || e.getKeyChar() == 'A')
 				keys[0] = true;
-			if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D')
+			if (e.getKeyChar() == 'd' || e.getKeyCode() == 39 || e.getKeyChar() == 'D')
 				keys[1] = true;
-			if (e.getKeyChar() == 'w' || e.getKeyChar() == 'W')
+			if (e.getKeyChar() == 'w' || e.getKeyCode() == 38 || e.getKeyChar() == 'W')
 				keys[2] = true;
-			if (e.getKeyChar() == 's' || e.getKeyChar() == 'S')
+			if (e.getKeyChar() == 's' || e.getKeyCode() == 40 || e.getKeyChar() == 'S')
 				keys[3] = true;
 			if (e.getKeyChar() == ' ')
 				keys[4] = true;
@@ -78,13 +78,13 @@ public class GameVisualizer {
 		@Override
 		public void keyReleased(KeyEvent e) {
 
-			if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A')
+			if (e.getKeyChar() == 'a' || e.getKeyCode() == 37 || e.getKeyChar() == 'A')
 				keys[0] = false;
-			if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D')
+			if (e.getKeyChar() == 'd' || e.getKeyCode() == 39 || e.getKeyChar() == 'D')
 				keys[1] = false;
-			if (e.getKeyChar() == 'w' || e.getKeyChar() == 'W')
+			if (e.getKeyChar() == 'w' || e.getKeyCode() == 38 || e.getKeyChar() == 'W')
 				keys[2] = false;
-			if (e.getKeyChar() == 's' || e.getKeyChar() == 'W')
+			if (e.getKeyChar() == 's' || e.getKeyCode() == 40 || e.getKeyChar() == 'W')
 				keys[3] = false;
 			if (e.getKeyChar() == ' ')
 				keys[4] = false;
