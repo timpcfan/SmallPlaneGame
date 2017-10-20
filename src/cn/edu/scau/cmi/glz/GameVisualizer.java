@@ -73,6 +73,7 @@ public class GameVisualizer {
 				keys[3] = true;
 			if (e.getKeyChar() == ' ')
 				keys[4] = true;
+			
 		}
 
 		@Override
@@ -88,6 +89,9 @@ public class GameVisualizer {
 				keys[3] = false;
 			if (e.getKeyChar() == ' ')
 				keys[4] = false;
+			if(e.getKeyCode() == 10) {
+				isRunning = !isRunning;
+			}
 		}
 	}
 
@@ -113,6 +117,8 @@ public class GameVisualizer {
 		long now = 0; // 绘制图像前的时间戳
 		long total = 0; // 每次绘制图像耗时（毫秒）
 		while (true) {
+			
+			
 			now = System.nanoTime();
 			frame.render(model); // 绘制图像
 			try {
@@ -135,6 +141,8 @@ public class GameVisualizer {
 
 			// 更新数据 //
 
+			if(!isRunning) passedSeconds = 0;
+			
 			// 实体移动
 			for (GameEntity entity : model.getImageEntitesCopy()) {
 				entity.move(passedSeconds);
@@ -142,6 +150,7 @@ public class GameVisualizer {
 
 			if (model.getViewType() == ViewType.GAMING) {
 				
+				if(isRunning){
 				mouseEvents.clear(); // 清空鼠标事件队列
 
 				// 玩家移动
@@ -181,7 +190,7 @@ public class GameVisualizer {
 					model = ViewBuilder.buildGameoverView(frame, model.getScore());
 					isRunning = false;
 				}
-
+				}
 			} // end if GAMING
 
 			if (model.getViewType() == ViewType.MAIN) {
