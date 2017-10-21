@@ -8,7 +8,7 @@ public class ViewBuilder {
 	 */
 	public static GameModel buildMainView(GameFrame frame) {
 		GameModel model = new GameModel();
-		model.setViewType(ViewType.MAIN);
+		model.setViewType(ViewType.MAIN); // 将model的模式设为“主界面”
 		
 		model.addImage(new ImageEntity(0, 0, VisHelper.MainPage));
 		model.addImage(new ImageEntity(255, 666, VisHelper.PlayButton));
@@ -22,7 +22,7 @@ public class ViewBuilder {
 	 */
 	public static GameModel buildGameoverView(GameFrame frame, int score) {
 		GameModel model = new GameModel();
-		model.setViewType(ViewType.GAMEOVER);
+		model.setViewType(ViewType.GAMEOVER); // 将model的模式设为“游戏结束”
 		
 		model.addText(TextEntity.buildTextEntity("Game Over", 65, 
 						frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 6, VisHelper.Red));
@@ -43,49 +43,19 @@ public class ViewBuilder {
 		model.addText(TextEntity.buildTextEntity("EXIT", 50,
 				frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 2 + 320, VisHelper.Cyan));
 		
-		
-
 		return model;
 	}
 		
 	/**
-	 * 生成一个示例界面
-	 * @return 一个示例界面数据模型Model
+	 * 生成游戏界面，并初始化玩家飞机
+	 * @param frame
+	 * @return 游戏界面的数据模型
 	 */
-	public static GameModel buildDemoView(GameFrame frame) {
-		GameModel model = new GameModel();
-		
-		// 添加文字
-		// 注：文字只使用英文
-		TextEntity text1 = TextEntity.buildTextEntity("Hello, World!", 50,
-									frame.getCanvasWidth() / 2, frame.getCanvasHeight() / 3,
-									VisHelper.Cyan);
-		model.addText(text1);
-		TextEntity text2 = TextEntity.buildTextEntity("_(:3LZ)_", 30,
-									300, 600,
-									VisHelper.LightBlue);
-		model.addText(text2);
-		
-		// 添加图形
-		ShapeEntity circle = ShapeEntity.buildCircleEntity(300, 400, 30, VisHelper.Amber, true);
-		model.addShape(circle);
-		ShapeEntity rect = ShapeEntity.buildRectangleEntity(100, 500, 30, 60, VisHelper.Brown, true);
-		model.addShape(rect);
-		ShapeEntity ellipse = ShapeEntity.buildEllipseEntity(200, 20, 260, 120, VisHelper.Red, false);
-		model.addShape(ellipse);
-		
-		// 添加图片
-		model.addImage(new ImageEntity(20, 600, VisHelper.UFO));
-
-		
-		return model;
-	}
-	
 	public static GameModel buildGamingView(GameFrame frame) {
 		GameModel model = new GameModel();
-		model.setViewType(ViewType.GAMING);
+		model.setViewType(ViewType.GAMING); // 将model的模式设为“游戏中”
 
-		// TODO Move away from here
+		// 初始化玩家飞机
 		PlayerPlane player = new PlayerPlane(0, 0, 300);
 		player.setCenterX(frame.getCanvasWidth() / 2);
 		player.setCenterY(frame.getCanvasHeight() * 3 / 4);

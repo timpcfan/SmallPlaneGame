@@ -94,30 +94,48 @@ public class GameEntity {
 		return new Point((int) x, (int) y);
 	}
 
+	/**
+	 * 碰撞检测方法
+	 * @param other 另一个对象
+	 * @param ratio 碰撞检测的百分比
+	 * @return 是否碰撞
+	 */
 	public boolean collideWith(GameEntity other, double ratio) {
 
 		return Math.abs(this.getCenterX() - other.getCenterX()) < (this.getW() / 2 + other.getW() / 2) * ratio
 				&& Math.abs(this.getCenterY() - other.getCenterY()) < (this.getH() / 2 + other.getH() / 2) * ratio;
 	}
 
+	/**
+	 * 实体移动方法
+	 * @param passedSeconds 距离上一帧经过的时间（秒）
+	 */
 	public void move(double passedSeconds) {
+		// 距离 ＝ 速度 × 时间
 		x += vx * passedSeconds;
 		y += vy * passedSeconds;
 	}
 
+	// 判断对象是否死亡
 	public boolean isDead() {
 		return isDead;
 	}
 	
+	// 设置对象死亡
 	public void setDead(boolean isDead) {
 		this.isDead = isDead;
 	}
 	
+	// 判断对象是否出界
 	public boolean isOutOfFrame(GameFrame frame) {
 		return false;
 	}
 }
 
+/**
+ * 图像实体类，继承于GameEntity
+ * 增加了图像的数据域
+ */
 class ImageEntity extends GameEntity {
 
 	private Image image;
@@ -143,29 +161,32 @@ class ImageEntity extends GameEntity {
 		setImage(icon.getImage());
 	}
 
+	// 设置对象的图像
 	public void setImage(Image image) {
 		this.image = image;
 		this.setW(this.image.getWidth(null));
 		this.setH(this.image.getHeight(null));
 	}
 
+	// 获得对象的图像
 	public Image getImage() {
 		return this.image;
 	}
 
 }
 
+/**
+ * 玩家飞机类，继承于ImageEntity类
+ */
 class PlayerPlane extends ImageEntity {
 
-	private int life;
-	private int bullet;
-	private int fireDelay;
+	private int life; // 生命数
+	private int fireDelay; // 开火的延迟
 
 	public PlayerPlane(double x, double y, int fireDelay) {
 		super(x, y, VisHelper.Plane);
 		this.fireDelay = fireDelay;
 		this.life = 3;
-		this.bullet = 0;
 	}
 
 	public int getFireDelay() {
@@ -174,14 +195,6 @@ class PlayerPlane extends ImageEntity {
 
 	public void setFireDelay(int fireDelay) {
 		this.fireDelay = fireDelay;
-	}
-
-	public void fire() {
-		bullet--;
-	}
-
-	public boolean hasBullet() {
-		return bullet > 0;
 	}
 
 	public void crash() {
@@ -199,21 +212,15 @@ class PlayerPlane extends ImageEntity {
 	public void setLife(int life) {
 		this.life = life;
 	}
-
-	public int getBullet() {
-		return bullet;
-	}
-
-	public void setBullet(int bullet) {
-		this.bullet = bullet;
-	}
-
 }
 
+/**
+ * 敌人实体类，继承与ImageEntity类
+ */
 class Enemy extends ImageEntity {
 
-	private int life = 1;
-	private int score = 100;
+	private int life = 1; // 生命数
+	private int score = 100; // 击毁获得的分数
 
 	public Enemy() {
 		super();
@@ -255,17 +262,25 @@ class Enemy extends ImageEntity {
 		this.score = score;
 	}
 
+	// 重写死亡判断方法，用于垃圾回收
 	@Override
 	public boolean isDead() {
 		return life == 0;
 	}
 	
+	// 重写出界判定方法，用于垃圾回收
 	@Override
 	public boolean isOutOfFrame(GameFrame frame) {
 		return getY() > frame.getCanvasHeight();
 	}
 }
 
+/**
+ * 大陨石类，继承于Enemy类
+ * 拥有大陨石的图像
+ * 有4条命
+ * 击毁获得300分
+ */
 class Stone1 extends Enemy {
 
 	public Stone1() {
@@ -278,6 +293,8 @@ class Stone1 extends Enemy {
 		setScore(300);
 	}
 	
+	// 被击中时会调用该方法，更换陨石的图像
+	// 使其产生裂纹
 	@Override
 	public void beShot() {
 		super.beShot();
@@ -287,6 +304,7 @@ class Stone1 extends Enemy {
 		else if(getLife() == 0) setImage(VisHelper.Stone1_broken);
 	}
 	
+	// 撞击到玩家会调用这个方法，更换石头的图像，并设置生命为0
 	@Override
 	public void crash() {
 		super.crash();
@@ -294,6 +312,12 @@ class Stone1 extends Enemy {
 	}
 }
 
+/**
+ * 小陨石类，继承于Enemy类
+ * 拥有小陨石的图像
+ * 有2条命
+ * 击毁获得100分
+ */
 class Stone2 extends Enemy {
 
 	public Stone2() {
@@ -306,6 +330,8 @@ class Stone2 extends Enemy {
 		setScore(100);
 	}
 	
+	// 被击中时会调用该方法，更换陨石的图像
+	// 使其产生裂纹
 	@Override
 	public void beShot() {
 		super.beShot();
@@ -313,6 +339,7 @@ class Stone2 extends Enemy {
 		else if(getLife() == 0) setImage(VisHelper.Stone2_broken);
 	}
 	
+	// 撞击到玩家会调用这个方法，更换石头的图像，并设置生命为0
 	@Override
 	public void crash() {
 		super.crash();
@@ -320,6 +347,9 @@ class Stone2 extends Enemy {
 	}
 }
 
+/**
+ * 子弹类，继承于ImageEntity类
+ */
 class Bullet extends ImageEntity {
 
 	public Bullet() {
@@ -331,10 +361,12 @@ class Bullet extends ImageEntity {
 		setBulletSpeed(speed);
 	}
 
+	// 设置子弹速度
 	public void setBulletSpeed(double speed) {
 		setSpeed(0, -speed);
 	}
 	
+	// 重写出界判定方法，用于垃圾回收
 	@Override
 	public boolean isOutOfFrame(GameFrame frame) {
 		return getY() + getH() < 0;
@@ -342,7 +374,7 @@ class Bullet extends ImageEntity {
 }
 
 /**
- * 文字实体类
+ * 文字实体类，继承于GameEntity类
  */
 class TextEntity extends GameEntity {
 
@@ -425,13 +457,13 @@ class TextEntity extends GameEntity {
 }
 
 /**
- * 图形实体类
+ * 图形实体类，继承于GameEntity类
  */
 class ShapeEntity extends GameEntity {
 
-	private Shape shape;
-	private Color color;
-	private boolean isFilled = false;
+	private Shape shape; // 储存的形状对象
+	private Color color; // 颜色
+	private boolean isFilled = false; // 是否填充
 
 	private ShapeEntity() {
 		super(0, 0);

@@ -105,19 +105,19 @@ public class VisHelper {
     
     
     
-    // 绘制图形实例
+    // 绘制图形实体
     public static void drawShapeEntity(Graphics2D g, ShapeEntity shapeEntity) {
     	setColor(g, shapeEntity.getColor());
     	if(shapeEntity.isFilled()) g.fill(shapeEntity.getShape());
     	else g.draw(shapeEntity.getShape());
     }
     
-    // 绘制图形实例
+    // 绘制图形实体
     public static void drawImageEntity(Graphics2D g, ImageEntity imageEntity) {
     	g.drawImage(imageEntity.getImage(), (int)imageEntity.getX(), (int)imageEntity.getY(), null);
     }
     
-    // 绘制文字实例
+    // 绘制文字实体，实体中的坐标为中心坐标
     public static void drawTextEntity(Graphics2D g, TextEntity textEntity) {
     	setColor(g, textEntity.getColor());
         g.setFont(FONT.deriveFont(textEntity.getFontSize()));
@@ -127,6 +127,7 @@ public class VisHelper {
         g.drawString(textEntity.getText(), (int)(textEntity.getCenterX() - w/2), (int)(textEntity.getCenterY() - h/2));
     }
     
+    // 绘制文字实体，但将实体中指示的坐标视作左上角坐标
     public static void drawTextEntityUsePosAsTopLeft(Graphics2D g, TextEntity textEntity) {
     	setColor(g, textEntity.getColor());
         g.setFont(FONT.deriveFont(textEntity.getFontSize()));
@@ -155,36 +156,17 @@ public class VisHelper {
         }
     }
     
-
     // 绘制图像
-    public static void putImage(Graphics2D g, int x, int y, String imageURL){
-
-        ImageIcon icon = new ImageIcon(imageURL);
-        Image image = icon.getImage();
-
-        g.drawImage(image, x, y, null);
-    }
-    
     public static void putImage(Graphics2D g, int x, int y, Image image) {
     	g.drawImage(image, x, y, null);
     }
-
-    // 绘制文字
-    public static void drawText(Graphics2D g, String text, int centerx, int centery){
-
-        if(text == null)
-            throw new IllegalArgumentException("Text is null in drawText function!");
-
-        FontMetrics metrics = g.getFontMetrics();
-        int w = metrics.stringWidth(text);
-        int h = metrics.getDescent();
-        g.drawString(text, centerx - w/2, centery + h);
-    }
     
+    // 加载图像
     public static Image loadImage(String imageURL) {
     	return new ImageIcon(imageURL).getImage();
     }
     
+    // 判断一个点是否在图像的区域中
     public static boolean isPointInImage(int px, int py, Image image, int imageX, int imageY) {
     	return px >= imageX && px <= imageX + image.getWidth(null) &&
     			py >= imageY && py <= imageY + image.getHeight(null);

@@ -70,8 +70,8 @@ public class GameFrame extends JFrame{
 		
 
 		public GameCanvas() {
-			super(true);
-			setBackground(VisHelper.Sky);
+			super(true); // 设置双缓存
+			setBackground(VisHelper.Sky); // 设置背景颜色
 		}
 		
 		/**
@@ -83,7 +83,7 @@ public class GameFrame extends JFrame{
 			
 			Graphics2D g2d = (Graphics2D) g;
 			
-			// 抗锯齿
+			// 设置开启抗锯齿模式
             RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
             hints.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.addRenderingHints(hints);
