@@ -1,6 +1,6 @@
 package cn.edu.scau.cmi.glz;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * GameModel类用于储存游戏数据（Model）
@@ -8,22 +8,22 @@ import java.util.ArrayList;
 public class GameModel {
 	
 	// 游戏的数据
-	private ArrayList<ImageEntity> imageEntities; // 图像实体链表
-	private ArrayList<Enemy> enemies; // 敌人实体链表
-	private ArrayList<Bullet> bullets; // 子弹实体链表
-	private ArrayList<TextEntity> texts; // 文字实体链表
-	private ArrayList<ShapeEntity> shapes; // 形状实体链表
+	private LinkedList<ImageEntity> imageEntities; // 图像实体链表
+	private LinkedList<Enemy> enemies; // 敌人实体链表
+	private LinkedList<Bullet> bullets; // 子弹实体链表
+	private LinkedList<TextEntity> texts; // 文字实体链表
+	private LinkedList<ShapeEntity> shapes; // 形状实体链表
 	private PlayerPlane player; // 玩家实体
 	private ViewType viewType; // 当前Model的类型
 	private int score; // 分数
 	
 	
 	public GameModel() {
-		imageEntities = new ArrayList<>();
-		enemies = new ArrayList<>();
-		bullets = new ArrayList<>();
-		texts = new ArrayList<>();
-		shapes = new ArrayList<>();
+		imageEntities = new LinkedList<>();
+		enemies = new LinkedList<>();
+		bullets = new LinkedList<>();
+		texts = new LinkedList<>();
+		shapes = new LinkedList<>();
 		viewType = null;
 		player = null;
 		score = 0;
@@ -55,58 +55,58 @@ public class GameModel {
 	}
 
 	// 获取图像实体链表
-	public ArrayList<ImageEntity> getImageEntites() {
+	public LinkedList<ImageEntity> getImageEntites() {
 		return imageEntities;
 	}
 	
 	// 获得图像实体链表的拷贝（用于遍历链表）
 	@SuppressWarnings("unchecked")
-	public ArrayList<ImageEntity> getImageEntitesCopy(){
-		return (ArrayList<ImageEntity>) imageEntities.clone();
+	public LinkedList<ImageEntity> getImageEntitesCopy(){
+		return (LinkedList<ImageEntity>) imageEntities.clone();
 	}
 	
 	// 获取敌人实体链表
-	public ArrayList<Enemy> getEnemies(){
+	public LinkedList<Enemy> getEnemies(){
 		return enemies;
 	}
 	
 	// 获得敌人实体链表的拷贝（用于遍历链表）
 	@SuppressWarnings("unchecked")
-	public ArrayList<Enemy> getEnemiesCopy(){
-		return (ArrayList<Enemy>) enemies.clone();
+	public LinkedList<Enemy> getEnemiesCopy(){
+		return (LinkedList<Enemy>) enemies.clone();
 	}
 	
 	// 获取子弹实体链表
-	public ArrayList<Bullet> getBullets(){
+	public LinkedList<Bullet> getBullets(){
 		return bullets;
 	}
 	
 	// 获得子弹实体链表的拷贝（用于遍历链表）
 	@SuppressWarnings("unchecked")
-	public ArrayList<Bullet> getBulletsCopy(){
-		return (ArrayList<Bullet>) bullets.clone();
+	public LinkedList<Bullet> getBulletsCopy(){
+		return (LinkedList<Bullet>) bullets.clone();
 	}
 	
 	// 获取文字实体链表
-	public ArrayList<TextEntity> getTexts() {
+	public LinkedList<TextEntity> getTexts() {
 		return texts;
 	}
 	
 	// 获得文字实体链表的拷贝（用于遍历链表）
 	@SuppressWarnings("unchecked")
-	public ArrayList<TextEntity> getTextsCopy(){
-		return (ArrayList<TextEntity>) texts.clone();
+	public LinkedList<TextEntity> getTextsCopy(){
+		return (LinkedList<TextEntity>) texts.clone();
 	}
 	
 	// 获取形状实体链表
-	public ArrayList<ShapeEntity> getShapes() {
+	public LinkedList<ShapeEntity> getShapes() {
 		return shapes;
 	}
 	
 	// 获得形状实体链表的拷贝（用于遍历链表）
 	@SuppressWarnings("unchecked")
-	public ArrayList<ShapeEntity> getShapesCopy(){
-		return (ArrayList<ShapeEntity>) shapes.clone();
+	public LinkedList<ShapeEntity> getShapesCopy(){
+		return (LinkedList<ShapeEntity>) shapes.clone();
 	}
 	
 	// 设置玩家
