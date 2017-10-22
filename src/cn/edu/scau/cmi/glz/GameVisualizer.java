@@ -113,26 +113,15 @@ public class GameVisualizer {
 		long oldtime = 0;
 		long fpsTime = (long) ((Double.valueOf(1000) / Double.valueOf(DEFAULT_FPS)) * 1000000);
 		long now = 0; // 绘制图像前的时间戳
-		long total = 0; // 每次绘制图像耗时（毫秒）
 		
 		// 游戏主循环
 		while (true) {
 			
+			// 控制帧率
 			now = System.nanoTime();
 			frame.render(model); // 绘制图像
-			try {
-				// 除去绘制之后还需要休眠的时间
-				total = System.nanoTime() - now;
-				if (total > fpsTime) {
-					continue; // 如果本次绘制时间超过每帧需要绘制的时间，则直接继续绘制
-				}
-				Thread.sleep((fpsTime - (System.nanoTime() - now)) / 1000000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			while ((System.nanoTime() - now) < fpsTime) {
-				System.nanoTime(); // 使用循环，精确控制每帧绘制时长
-			}
+			while ((System.nanoTime() - now) < fpsTime); // 使用循环，精确控制每帧绘制时长
+			
 
 			// 计算上一帧到这一帧所花的时间（秒）
 			double passedSeconds = (System.nanoTime() - oldtime) / 1000000000.;

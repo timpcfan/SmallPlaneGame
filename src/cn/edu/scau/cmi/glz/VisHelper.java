@@ -147,7 +147,7 @@ public class VisHelper {
     }
 
     // 延迟t毫秒
-    public static void pause(int t) {
+    public static void pause(long t) {
         try {
             Thread.sleep(t);
         }

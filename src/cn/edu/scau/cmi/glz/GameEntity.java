@@ -265,7 +265,7 @@ class Enemy extends ImageEntity {
 	// 重写死亡判断方法，用于垃圾回收
 	@Override
 	public boolean isDead() {
-		return life == 0;
+		return life <= 0;
 	}
 	
 	// 重写出界判定方法，用于垃圾回收
